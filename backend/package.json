@@ -17,5 +17,7 @@
     "prettier": "^1.18.2",
     "sucrase": "^3.10.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
