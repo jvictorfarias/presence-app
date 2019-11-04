@@ -1,6 +1,23 @@
 {
-  "name": "backend",
+  "name": "presence-app",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "sucrase-node app/server.js",
+    "dev": "nodemon app/server.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2",
+    "sucrase": "^3.10.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
