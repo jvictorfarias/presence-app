@@ -61,6 +61,14 @@ button {
   margin-bottom: 8px;
 }
 
+.content form div label {
+  height: 0;
+}
+
+.content form div label input {
+  height: 0;
+}
+
 .content form label span {
   font-weight: normal;
   color: #999;
@@ -83,11 +91,11 @@ button {
   padding: 0 20px;
   font-size: 16px;
   font-weight: bold;
-  background: #1b405e;
+  background: #f34545;
   color: #fff;
   cursor: pointer;
 }
 
 .content button.btn:hover {
-  background: rgb(20, 20, 160);
+  background: #1b405e;
 }
