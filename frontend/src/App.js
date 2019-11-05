@@ -19,10 +19,6 @@ function App() {
     if (type < 1) {
       window.alert("Selecione ALUNO ou PROFESSOR");
     }
-    console.log(id);
-    console.log(password);
-    console.log(type);
-    // 41:31
   }
 
   return (
