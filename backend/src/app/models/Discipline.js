@@ -25,7 +25,14 @@ const discipline = new Schema({
   teacher: {
     type: Schema.Types.ObjectId,
     ref: 'teacher'
-  }
+  },
+
+  students: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'student'
+    }
+  ]
 });
 
 export default mongoose.model('discipline', discipline);
