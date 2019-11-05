@@ -16,32 +16,17 @@ function App() {
           <label htmlFor="text">Identificação</label>
           <input type="text" id="matr_siape" placeholder="Matrícula/SIAPE" />
 
-          <div className="form-check">
-            <label>
-              <input
-                type="radio"
-                name="option1"
-                value="aluno"
-                checked={true}
-                className="form-check-input"
-              />
-              Aluno
-            </label>
-
-            <label>
-              <input
-                type="radio"
-                name="option2"
-                value="professor"
-                checked={false}
-                className="form-check-input"
-              />
-              Professor
-            </label>
-          </div>
-
           <label htmlFor="text">Senha</label>
           <input type="password" id="password" placeholder="Senha" />
+
+          <label htmlFor="text">Tipo de Conta</label>
+          <select name="tipo" id="tipo">
+            <option disabled selected value>
+              Aluno / Professor
+            </option>
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+          </select>
 
           <button className="btn" type="submit">
             ENTRAR

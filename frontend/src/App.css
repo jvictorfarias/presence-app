@@ -61,20 +61,16 @@ button {
   margin-bottom: 8px;
 }
 
-.content form div label {
-  height: 0;
-}
-
-.content form div label input {
-  height: 0;
-}
-
-.content form label span {
-  font-weight: normal;
-  color: #999;
-  font-size: 12px;
-}
 .content form input {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 45px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.content form select {
   margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 2px;
