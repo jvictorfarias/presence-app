@@ -1,0 +1,68 @@
+.contentL {
+  width: 100%;
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 4px;
+  padding: 30px;
+}
+
+.contentL > p {
+  font-size: 22px;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+
+.contentL form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentL form label {
+  font-size: 14px;
+  color: #444;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.contentL form input {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 45px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.contentL form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.contentL form input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.contentL form select {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 45px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.contentL button.btn {
+  border: 0;
+  border-radius: 2px;
+  width: 100%;
+  height: 42px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f34545;
+  color: #fff;
+  cursor: pointer;
+}
+
+.contentL button.btn:hover {
+  background: #1b405e;
+}

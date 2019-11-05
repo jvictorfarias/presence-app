@@ -1,0 +1,35 @@
+.contentM {
+  width: 275%;
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 4px;
+  padding: 30px;
+  text-align: center;
+}
+
+.contentM > p {
+  font-size: 22px;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+
+.contentM button.btn {
+  border: 0;
+  border-radius: 2px;
+  width: 25%;
+  height: 42px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f34545;
+  color: #fff;
+  cursor: pointer;
+}
+
+.contentM button.btn:hover {
+  background: #1b405e;
+}
+
+.contentM table {
+  margin: 50px auto;
+}
