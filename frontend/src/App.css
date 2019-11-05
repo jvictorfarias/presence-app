@@ -27,7 +27,7 @@ button {
 }
 
 .container {
-  margin: 80px auto 0;
+  margin: 60px auto 0;
   max-width: 450px;
   width: 100%;
   display: flex;
@@ -38,7 +38,7 @@ button {
 .content {
   width: 100%;
   background: #fff;
-  margin-top: 50px;
+  margin-top: 30px;
   border-radius: 4px;
   padding: 30px;
 }
@@ -68,6 +68,14 @@ button {
   height: 45px;
   padding: 0 15px;
   font-size: 16px;
+}
+
+.content form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.content form input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .content form select {
