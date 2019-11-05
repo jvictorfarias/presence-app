@@ -31,5 +31,36 @@
 }
 
 .contentM table {
-  margin: 50px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.contentM table thead th#aluno {
+  border: 2px solid #1b405e;
+  min-width: 700px;
+  height: 20px;
+  border-left-width: 0;
+}
+.contentM table thead th#matricula,
+th#presenças,
+th#faltas {
+  border: 2px solid #1b405e;
+  min-width: 150px;
+  height: 20px;
+  border-left-width: 0;
+}
+.contentM table thead th#aluno:first-child {
+  border-left-width: 1px;
+}
+
+.contentM table tr#presentes td {
+  background: #028b40;
+  color: white;
+}
+
+.contentM table tr#faltantes td {
+  background: #c41d1d;
+  color: white;
 }

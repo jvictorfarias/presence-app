@@ -1,7 +1,5 @@
 import React from "react";
 
-import api from "../../services/api";
-
 import "./styles.css";
 
 export default function Management() {
@@ -11,25 +9,34 @@ export default function Management() {
         <p>Presenças confirmadas</p>
         <table>
           <thead>
-            <tr>
-              <th>Aluno</th>
-              <th>Matrícula</th>
-              <th>Presenças</th>
-              <th>Faltas</th>
-            </tr>
+            <th id="aluno">Aluno</th>
+            <th id="matricula">Matrícula</th>
+            <th id="presenças">Presenças</th>
+            <th id="faltas">Faltas</th>
           </thead>
+
+          <tr id="presentes">
+            <td>JAMERSON ALVES AGUIAR DA SILVA</td>
+            <td>418866</td>
+            <td>8</td>
+            <td>2</td>
+          </tr>
         </table>
 
         <p>Presenças não confirmadas</p>
         <table>
           <thead>
-            <tr>
-              <th>Aluno</th>
-              <th>Matrícula</th>
-              <th>Presenças</th>
-              <th>Faltas</th>
-            </tr>
+            <th id="aluno">Aluno</th>
+            <th id="matricula">Matrícula</th>
+            <th id="presenças">Presenças</th>
+            <th id="faltas">Faltas</th>
           </thead>
+          <tr id="faltantes">
+            <td>JOÃO VICTOR OLIVEIRA FARIAS</td>
+            <td>418082</td>
+            <td>6</td>
+            <td>4</td>
+          </tr>
         </table>
 
         <button className="btn" type="submit">
