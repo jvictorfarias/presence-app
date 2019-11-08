@@ -1,12 +1,17 @@
 import mongoose, { Schema } from 'mongoose';
 
-const classroom = new Schema({
+const teacher = new Schema({
   name: {
     type: String,
     required: true
   },
 
-  cod_room: {
+  siape: {
+    type: Number,
+    required: true
+  },
+
+  password_hash: {
     type: String,
     required: true
   },
@@ -19,4 +24,4 @@ const classroom = new Schema({
   ]
 });
 
-export default mongoose.model('classroom', classroom);
+export default mongoose.model('teacher', teacher);
