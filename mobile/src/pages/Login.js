@@ -1,11 +1,18 @@
 import React from "react";
-import { View, Image, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView
+} from "react-native";
 
 import logo from "../assets/logo.png";
 
 export default function Login() {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <Image source={logo} />
 
       <View style={styles.form}>
@@ -14,9 +21,22 @@ export default function Login() {
           style={styles.input}
           placeholder="Matrícula/SIAPE"
           placeholderTextColor="#999"
+          keyboardType="decimal-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
+        <Text style={styles.label}>Senha</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#999"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
