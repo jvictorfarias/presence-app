@@ -12,8 +12,9 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 
 import logo from "../assets/logo.png";
+import Management from "./Management";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState(null);
@@ -33,6 +34,12 @@ export default function Login() {
     if (type === null) {
       Alert.alert("Selecione ALUNO ou PROFESSOR!");
       return false;
+    }
+
+    if (type === "aluno") {
+      navigation.navigate("Confirmation");
+    } else {
+      navigation.navigate("Management");
     }
   }
 
