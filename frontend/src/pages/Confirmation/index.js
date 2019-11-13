@@ -29,7 +29,7 @@ export default function Confirmation() {
             <span>
               SEG - 20:00 às 22:00
               <br />
-              TER - 18:00 às 20:00
+              TER - 20:00 às 22:00
             </span>
 
             <button className="btn" type="submit">
