@@ -12,7 +12,6 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 
 import logo from "../assets/logo.png";
-import Management from "./Management";
 
 export default function Login({ navigation }) {
   const [id, setId] = useState("");

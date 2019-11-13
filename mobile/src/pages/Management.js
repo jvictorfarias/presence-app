@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: 300,
     alignSelf: "stretch",
     marginTop: 25,
-    marginHorizontal: 30,
+    marginHorizontal: 10,
     paddingHorizontal: 30,
     paddingVertical: 30
   },
