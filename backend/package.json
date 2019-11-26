@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "sucrase-node app/server.js",
-    "dev": "nodemon app/server.js"
+    "start": "sucrase-node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "devDependencies": {
     "eslint": "^6.6.0",

@@ -6,7 +6,7 @@ import 'dotenv/config';
 import './database';
 
 class App {
-  construct() {
+  constructor() {
     this.server = express();
     this.middlewares();
     this.routes();
