@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import StudentController from './app/controllers/StudentController';
-import TeacherController from './app/controllers/TeacherController';
-import DisciplineController from './app/controllers/DisciplineController';
+// import TeacherController from './app/controllers/TeacherController';
+// import DisciplineController from './app/controllers/DisciplineController';
 
 const routes = new Router();
 
