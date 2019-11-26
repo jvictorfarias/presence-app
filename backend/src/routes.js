@@ -8,7 +8,7 @@ const routes = new Router();
 
 /** Rotas para alunos */
 routes.post('/students', StudentController.store);
-// routes.get('/students/:id', StudentController.show);
+routes.get('/students/:id', StudentController.show);
 // routes.get('/students', StudentController.index);
 
 /** Rotas para professores */

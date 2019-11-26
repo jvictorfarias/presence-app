@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from "../../services/api";
 
 import "./styles.css";
 
@@ -6,12 +7,13 @@ export default function Login({ history }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("");
+  const [imei, setImei] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [captchaURL, setCaptchaURL] = useState(
     "https://academico.quixada.ufc.br/sippa/captcha.jpg"
   );
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (id < 1 || !Number.isInteger(Number(id))) {
       window.alert(
@@ -25,9 +27,15 @@ export default function Login({ history }) {
       window.alert("Selecione ALUNO ou PROFESSOR!");
     } else {
       if (type === "professor") {
+        await api.post("teachers", { siape: id, password });
         history.push("/management");
       } else {
-        history.push("/confirmation");
+        await api
+          .post("/students", { matriculation: id, password, imei })
+          .then(() => {
+            history.push("/confirmation");
+          })
+          .catch(alert("error"));
       }
     }
     // const response = await api.ROTADELOGIN('/ROTADELOGIN', { id, password, type })

@@ -12,18 +12,14 @@ const discipline = new Schema({
   },
 
   class_time: {
-    days: {
-      type: Date,
-      required: true
-    },
     starts: {
       type: Date,
 
-      required: true
+      required: false
     },
     ends: {
       type: Date,
-      required: true
+      required: false
     }
   },
 

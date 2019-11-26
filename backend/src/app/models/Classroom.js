@@ -6,6 +6,10 @@ const classroom = new Schema({
     required: true
   },
 
+  cod: {
+    type: String,
+    required: true
+  },
   disciplines: [
     {
       type: Schema.Types.ObjectId,

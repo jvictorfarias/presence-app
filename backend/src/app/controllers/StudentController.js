@@ -15,6 +15,8 @@ class StudentController {
         .required()
     });
 
+    const { name, matriculation, password } = req.body;
+
     /**
      * Caso seja inválido, retorna status de erro
      */
@@ -27,18 +29,18 @@ class StudentController {
      * Verifica se já existe algum aluno com essa matrícula
      */
 
-    if (await Student.findOne({ matriculation: req.body.matriculation })) {
+    if (await Student.findOne({ matriculation })) {
       return res.status(401).json({ error: 'student already exists' });
     }
+
+    /** Encripta a senha do aluno  */
+    const password_hash = await bcrypt.hash(password, 8);
 
     /**
      * Cria o aluno
      */
 
-    /** Encripta a senha do aluno  */
-    req.body.password_hash = await bcrypt.hash(req.body.password, 8);
-
-    const { id, name, matriculation } = await Student.create(req.body);
+    const { id } = await Student.create({ name, matriculation, password_hash });
     return res.json({
       id,
       name,
@@ -54,7 +56,8 @@ class StudentController {
       matriculation: Yup.string().required(),
       password: Yup.string()
         .min(8)
-        .required()
+        .required(),
+      imei: Yup.string().required()
     });
 
     /**
@@ -65,12 +68,20 @@ class StudentController {
       return res.status(403).json({ error: 'bad request' });
     }
 
+    const { matriculation, imei } = req.body;
+
     /**
      * Busca pelo usuário já validado
      */
     const student = await Student.findOne({
-      matriculation: req.body.matriculation
+      matriculation
     });
+
+    if (student.imei !== imei && imei !== undefined) {
+      return res
+        .status(403)
+        .json({ error: 'Dispositivo já cadastrado anteriormente' });
+    }
 
     /**
      * Caso o usuário não seja encontrado, retorna erro
@@ -89,7 +100,7 @@ class StudentController {
     /**
      * Retorna o usuário para que ele possa ser direcionado ao feed
      */
-    const { id, name, matriculation } = student;
+    const { id, name } = student;
     return res.status(200).json({
       id,
       name,
