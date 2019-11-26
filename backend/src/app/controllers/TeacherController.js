@@ -1,15 +1,15 @@
 import * as Yup from 'yup';
 import bcrypt from 'bcrypt';
-import Student from '../models/Student';
+import Teacher from '../models/Teacher';
 
 class StudentController {
   async store(req, res) {
     /**
-     * Validação do objeto student
+     * Validação do objeto Teacher
      */
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      matriculation: Yup.string().required(),
+      siape: Yup.string().required(),
       password: Yup.string()
         .min(8)
         .required()
@@ -24,25 +24,25 @@ class StudentController {
     }
 
     /**
-     * Verifica se já existe algum aluno com essa matrícula
+     * Verifica se já existe algum professor com essa matrícula
      */
 
-    if (await Student.findOne({ matriculation: req.body.matriculation })) {
-      return res.status(401).json({ error: 'student already exists' });
+    if (await Teacher.findOne({ siape: req.body.siape })) {
+      return res.status(401).json({ error: 'Teacher already exists' });
     }
 
     /**
-     * Cria o aluno
+     * Cria o professor
      */
 
-    /** Encripta a senha do aluno  */
+    /** Encripta a senha do professor */
     req.body.password_hash = await bcrypt.hash(req.body.password, 8);
 
-    const { id, name, matriculation } = await Student.create(req.body);
+    const { id, name, siape } = await Teacher.create(req.body);
     return res.json({
       id,
       name,
-      matriculation
+      siape
     });
   }
 
@@ -51,7 +51,7 @@ class StudentController {
      * Verifica se o objeto para validação está correto
      */
     const schema = Yup.object().shape({
-      matriculation: Yup.string().required(),
+      siape: Yup.string().required(),
       password: Yup.string()
         .min(8)
         .required()
@@ -68,32 +68,32 @@ class StudentController {
     /**
      * Busca pelo usuário já validado
      */
-    const student = await Student.findOne({
-      matriculation: req.body.matriculation
+    const teacher = await Teacher.findOne({
+      siape: req.body.siape
     });
 
     /**
      * Caso o usuário não seja encontrado, retorna erro
      */
-    if (!student) {
-      return res.status(400).json({ error: 'student not found' });
+    if (!teacher) {
+      return res.status(400).json({ error: 'teacher not found' });
     }
 
     /**
      * Verifica se a senha do usuário está correta e encriptada
      */
 
-    if (!(await bcrypt.compare(req.body.password, student.password_hash))) {
+    if (!(await bcrypt.compare(req.body.password, teacher.password_hash))) {
       return res.status(401).json({ error: 'Wrong password' });
     }
     /**
      * Retorna o usuário para que ele possa ser direcionado ao feed
      */
-    const { id, name, matriculation } = student;
+    const { id, name, siape } = teacher;
     return res.status(200).json({
       id,
       name,
-      matriculation
+      siape
     });
   }
 }
