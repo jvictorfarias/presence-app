@@ -1,25 +1,31 @@
 import { Router } from 'express';
 
 import StudentController from './app/controllers/StudentController';
-// import TeacherController from './app/controllers/TeacherController';
-// import DisciplineController from './app/controllers/DisciplineController';
+import TeacherController from './app/controllers/TeacherController';
+import DisciplineController from './app/controllers/DisciplineController';
+import ClassroomController from './app/controllers/ClassroomController';
+import SessionController from './app/controllers/SessionController';
+import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
+/** Criação de sessão para usuário */
+
+routes.post('/session', SessionController.store);
+
 /** Rotas para alunos */
 routes.post('/students', StudentController.store);
-routes.get('/students/:id', StudentController.show);
-// routes.get('/students', StudentController.index);
+routes.get('/students', StudentController.show);
 
 /** Rotas para professores */
 
-// routes.post('/teachers', TeacherController.store);
-// routes.get('/teachers/:id', TeacherController.show);
+routes.post('/teachers', TeacherController.store);
 
 /** Rotas para disciplinas */
 
-// routes.post('/disciplines', DisciplineController.store);
-// routes.get('/disciplines/:id', DisciplineController.show);
+routes.post('/disciplines', DisciplineController.store);
 
 /** Rotas para salas de aulas */
+routes.get('/classroom/:type/', authMiddleware, ClassroomController.show);
+
 export default routes;

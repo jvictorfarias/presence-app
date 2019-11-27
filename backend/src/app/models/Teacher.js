@@ -7,7 +7,7 @@ const teacher = new Schema({
   },
 
   siape: {
-    type: Number,
+    type: String,
     required: true
   },
 

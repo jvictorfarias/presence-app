@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import bcrypt from 'bcrypt';
 import Teacher from '../models/Teacher';
 
-class StudentController {
+class TeacherController {
   async store(req, res) {
     /**
      * Validação do objeto Teacher
@@ -98,4 +98,4 @@ class StudentController {
   }
 }
 
-export default new StudentController();
+export default new TeacherController();

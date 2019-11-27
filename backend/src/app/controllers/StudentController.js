@@ -9,13 +9,10 @@ class StudentController {
      */
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      matriculation: Yup.string().required(),
-      password: Yup.string()
-        .min(8)
-        .required()
+      matriculation: Yup.string().required()
     });
 
-    const { name, matriculation, password } = req.body;
+    const { name, matriculation } = req.body;
 
     /**
      * Caso seja inválido, retorna status de erro
@@ -33,16 +30,25 @@ class StudentController {
       return res.status(401).json({ error: 'student already exists' });
     }
 
+    const reversed = String(matriculation)
+      .split('')
+      .reverse()
+      .join('');
+
     /** Encripta a senha do aluno  */
-    const password_hash = await bcrypt.hash(password, 8);
+    const password_hash = await bcrypt.hash(reversed, 8);
 
     /**
      * Cria o aluno
      */
 
-    const { id } = await Student.create({ name, matriculation, password_hash });
+    const { _id } = await Student.create({
+      name,
+      matriculation,
+      password_hash
+    });
     return res.json({
-      id,
+      _id,
       name,
       matriculation
     });
@@ -54,10 +60,8 @@ class StudentController {
      */
     const schema = Yup.object().shape({
       matriculation: Yup.string().required(),
-      password: Yup.string()
-        .min(8)
-        .required(),
-      imei: Yup.string().required()
+      password: Yup.string().required(),
+      register: Yup.string()
     });
 
     /**
@@ -68,7 +72,7 @@ class StudentController {
       return res.status(403).json({ error: 'bad request' });
     }
 
-    const { matriculation, imei } = req.body;
+    const { password, matriculation, register } = req.body;
 
     /**
      * Busca pelo usuário já validado
@@ -77,7 +81,7 @@ class StudentController {
       matriculation
     });
 
-    if (student.imei !== imei && imei !== undefined) {
+    if (student.register !== register && student.register !== undefined) {
       return res
         .status(403)
         .json({ error: 'Dispositivo já cadastrado anteriormente' });
@@ -94,15 +98,15 @@ class StudentController {
      * Verifica se a senha do usuário está correta e encriptada
      */
 
-    if (!(await bcrypt.compare(req.body.password, student.password_hash))) {
+    if (!(await bcrypt.compare(password, student.password_hash))) {
       return res.status(401).json({ error: 'Wrong password' });
     }
     /**
      * Retorna o usuário para que ele possa ser direcionado ao feed
      */
-    const { id, name } = student;
+    const { _id, name } = student;
     return res.status(200).json({
-      id,
+      _id,
       name,
       matriculation
     });

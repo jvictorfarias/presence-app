@@ -1,22 +1,45 @@
 import * as Yup from 'yup';
-import Classroom from '../models/Classroom';
+// import Classroom from '../models/Classroom';
+import Discipline from '../models/Discipline';
+import Teacher from '../models/Teacher';
+import Student from '../models/Student';
 
 class ClassroomController {
-  async store(req, res) {
+  async show(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      cod: Yup.string().required()
+      type: Yup.string().required()
     });
 
-    const { name, cod } = req.body;
+    if (!(await schema.isValid(req.params))) {
+      return res.status(403).json({ error: 'Data validation failed' });
+    }
+    const { type } = req.params;
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'bad request' });
+    if (String(type) === 'student') {
+      const disciplines = await Discipline.aggregate([
+        { $unwind: '$students' },
+        {
+          $lookup: {
+            from: 'students',
+            localField: 'students',
+            foreignField: '_id',
+            as: 'students_disciplines'
+          }
+        },
+        { $unwind: 'students_disciplines' },
+        {
+          $group: {
+            _id: '$_id',
+            students: { $push: '$students' },
+            students_disciplines: { $push: '$students_disciplines' }
+          }
+        }
+      ]);
+
+      return res.status(200).json(disciplines);
     }
 
-    const classroom = await Classroom.create({ name, cod });
-
-    return res.status(200).json(classroom);
+    return res.status(400).json({ error: 'Not found' });
   }
 }
 
