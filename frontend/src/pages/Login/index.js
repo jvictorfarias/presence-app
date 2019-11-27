@@ -29,9 +29,9 @@ export default function Login({ history }) {
       return false;
     } else {
       if (type === "professor") {
-        const response = await api
-          .post("/session", { siape: id, password, type })
-          .then(() => {
+        await api
+          .post("session", { siape: id, password, type })
+          .then(response => {
             const { token } = response.data;
             localStorage.setItem("tokenSession", token);
             console.log(token);
@@ -40,9 +40,9 @@ export default function Login({ history }) {
           .catch(alert("error"));
       } else {
         const matriculation = id;
-        const response = await api
+        await api
           .post("/session", { matriculation, password, type })
-          .then(() => {
+          .then(response => {
             const { token } = response.data;
             localStorage.setItem("tokenSession", token);
             console.log(token);
