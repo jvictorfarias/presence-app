@@ -14,14 +14,7 @@ const teacher = new Schema({
   password_hash: {
     type: String,
     required: true
-  },
-
-  disciplines: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'discipline'
-    }
-  ]
+  }
 });
 
 export default mongoose.model('teacher', teacher);

@@ -19,14 +19,7 @@ const student = new Schema({
   imei: {
     type: String,
     required: false
-  },
-
-  disciplines: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'discipline'
-    }
-  ]
+  }
 });
 
 export default mongoose.model('student', student);

@@ -14,11 +14,12 @@ const discipline = new Schema({
   class_time: {
     starts: {
       type: Date,
-      required: true
+
+      required: false
     },
     ends: {
       type: Date,
-      required: true
+      required: false
     }
   },
 

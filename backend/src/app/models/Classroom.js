@@ -6,11 +6,10 @@ const classroom = new Schema({
     required: true
   },
 
-  cod_room: {
+  cod: {
     type: String,
     required: true
   },
-
   disciplines: [
     {
       type: Schema.Types.ObjectId,
