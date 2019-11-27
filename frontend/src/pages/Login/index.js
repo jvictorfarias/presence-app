@@ -6,12 +6,7 @@ import "./styles.css";
 export default function Login({ history }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
-  const [type, setType] = useState(null);
-=======
   const [type, setType] = useState("");
-  const [imei, setImei] = useState("");
->>>>>>> ba0156803ad9cef60a086dfe47f23e55a46ac9c8
   const [captcha, setCaptcha] = useState("");
   const [captchaURL, setCaptchaURL] = useState(
     "https://academico.quixada.ufc.br/sippa/captcha.jpg"
@@ -34,19 +29,25 @@ export default function Login({ history }) {
       return false;
     } else {
       if (type === "professor") {
-        await api.post("teachers", { siape: id, password });
-        history.push("/management");
-      } else {
-        await api
-          .post("/students", { matriculation: id, password, imei })
+        const response = await api
+          .post("/teachers", { siape: id, password })
           .then(() => {
+            const { token } = response.data;
+            localStorage.setItem("tokenSession", token);
+            history.push("/management");
+          })
+          .catch(alert("error"));
+      } else {
+        const response = await api
+          .post("/students", { matriculation: id, password })
+          .then(() => {
+            const { token } = response.data;
+            localStorage.setItem("tokenSession", token);
             history.push("/confirmation");
           })
           .catch(alert("error"));
       }
     }
-    // const response = await api.ROTADELOGIN('/ROTADELOGIN', { id, password, type })
-    // função deve ser async
   }
 
   return (

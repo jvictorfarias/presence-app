@@ -1,0 +1,95 @@
+.contentC {
+  width: 225%;
+  background: #fff;
+  margin-top: 30px;
+  border-radius: 4px;
+  padding: 30px;
+  text-align: center;
+}
+
+.contentC > p {
+  font-size: 22px;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+
+.contentC table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.contentC table th#nome {
+  border: 2px solid #1b405e;
+  min-width: 500px;
+  height: 20px;
+  border-left-width: 0;
+}
+.contentC table th#horario {
+  border: 2px solid #1b405e;
+  min-width: 150px;
+  height: 20px;
+  border-left-width: 0;
+}
+
+.contentC table th#presenças,
+th#faltas {
+  border: 2px solid #1b405e;
+  min-width: 90px;
+  height: 20px;
+  border-left-width: 0;
+}
+
+.contentC table th#nome:first-child {
+  border-left-width: 1px;
+}
+
+.contentC button.btn {
+  border: 0;
+  border-radius: 2px;
+  width: 42%;
+  height: 32px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background: #f34545;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px auto;
+}
+
+.contentC button.btn:hover {
+  background: #1b405e;
+}
+
+ul.class-list {
+  width: 100%;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 30px;
+}
+
+ul.class-list li {
+  display: flex;
+  flex-direction: column;
+}
+
+ul.class-list li header {
+  font-size: 24px;
+  width: 100%;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+ul.class-list li strong {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #444;
+}
+ul.class-list li span {
+  font-size: 15px;
+  color: #999;
+}

@@ -2,11 +2,16 @@ import React from "react";
 
 import "./styles.css";
 
-export default function Confirmation() {
+export default function Confirmation({ history }) {
+  function handleClick(event) {
+    event.preventDefault();
+    history.push("/management/students");
+  }
+
   return (
     <>
       <div className="contentC">
-        <p>Disciplinas do Aluno</p>
+        <p>Disciplinas do Professor</p>
 
         <ul className="class-list">
           <li>
@@ -18,8 +23,8 @@ export default function Confirmation() {
               SEX - 18:00 às 20:00
             </span>
 
-            <button className="btn" type="submit">
-              CONFIRMAR PRESENÇA
+            <button className="btn" type="button" onClick={handleClick}>
+              LISTA DE PRESENÇA
             </button>
           </li>
 
@@ -32,8 +37,8 @@ export default function Confirmation() {
               TER - 20:00 às 22:00
             </span>
 
-            <button className="btn" type="submit">
-              CONFIRMAR PRESENÇA
+            <button className="btn" type="button" onClick={handleClick}>
+              LISTA DE PRESENÇA
             </button>
           </li>
         </ul>
