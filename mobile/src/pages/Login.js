@@ -17,6 +17,10 @@ export default function Login({ navigation }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState(null);
+  const [captcha, setCaptcha] = useState("");
+  const [captchaURL, setCaptchaURL] = useState(
+    "https://academico.quixada.ufc.br/sippa/captcha.jpg"
+  );
 
   async function handleSubmit() {
     if (id < 1 || !Number.isInteger(Number(id))) {
@@ -84,6 +88,28 @@ export default function Login({ navigation }) {
             { label: "Professor", value: "professor" }
           ]}
         />
+        <View style={styles.captchaView}>
+          <TextInput
+            style={styles.inputCaptcha}
+            placeholder="Captcha"
+            placeholderTextColor="#999"
+            autoCapitalize="none"
+            value={captcha}
+            onChangeText={setCaptcha}
+          />
+
+          <Image
+            style={{
+              height: 44,
+              width: 100,
+              position: "absolute",
+              alignSelf: "flex-end"
+            }}
+            source={{
+              uri: "https://academico.quixada.ufc.br/sippa/captcha.jpg"
+            }}
+          ></Image>
+        </View>
 
         <TouchableOpacity onPress={handleSubmit} style={styles.button}>
           <Text style={styles.buttonText}>ENTRAR</Text>
@@ -119,12 +145,24 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#ddd",
+    borderRadius: 2,
     paddingHorizontal: 20,
     fontSize: 16,
     color: "#444",
     height: 44,
-    marginBottom: 15,
-    borderRadius: 2
+    marginBottom: 15
+  },
+  inputCaptcha: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 2,
+    height: 44,
+    alignSelf: "stretch",
+    paddingHorizontal: 20,
+    marginRight: 105,
+    fontSize: 16,
+    color: "#444",
+    marginBottom: 15
   },
   button: {
     height: 42,
