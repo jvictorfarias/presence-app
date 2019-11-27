@@ -5,7 +5,7 @@ import "./styles.css";
 export default function Login({ history }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState(null);
   const [captcha, setCaptcha] = useState("");
   const [captchaURL, setCaptchaURL] = useState(
     "https://academico.quixada.ufc.br/sippa/captcha.jpg"
@@ -17,12 +17,15 @@ export default function Login({ history }) {
       window.alert(
         "ID inválido! use APENAS números inteiros e não deixe o campo em branco!."
       );
+      return false;
     }
     if (password < 1) {
       window.alert("Senha em branco!");
+      return false;
     }
-    if (type < 1) {
+    if (type === null) {
       window.alert("Selecione ALUNO ou PROFESSOR!");
+      return false;
     } else {
       if (type === "professor") {
         history.push("/management");
