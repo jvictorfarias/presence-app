@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import log from './app/middlewares/log';
 import routes from './routes';
 import 'dotenv/config';
@@ -14,6 +15,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
     this.server.use(log('tiny'));
   }
 

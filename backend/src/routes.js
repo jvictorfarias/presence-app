@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import StudentController from './app/controllers/StudentController';
-// import TeacherController from './app/controllers/TeacherController';
+import TeacherController from './app/controllers/TeacherController';
 // import DisciplineController from './app/controllers/DisciplineController';
 
 const routes = new Router();
@@ -13,8 +13,8 @@ routes.get('/students/:id', StudentController.show);
 
 /** Rotas para professores */
 
-// routes.post('/teachers', TeacherController.store);
-// routes.get('/teachers/:id', TeacherController.show);
+routes.post('/teachers', TeacherController.store);
+routes.get('/teachers/:id', TeacherController.show);
 
 /** Rotas para disciplinas */
 

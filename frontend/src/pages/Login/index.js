@@ -7,7 +7,6 @@ export default function Login({ history }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("");
-  const [imei, setImei] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [captchaURL, setCaptchaURL] = useState(
     "https://academico.quixada.ufc.br/sippa/captcha.jpg"
@@ -27,11 +26,17 @@ export default function Login({ history }) {
       window.alert("Selecione ALUNO ou PROFESSOR!");
     } else {
       if (type === "professor") {
-        await api.post("teachers", { siape: id, password });
-        history.push("/management");
+        await api
+          .get("teachers")
+          .then(() => {
+            history.push("/management");
+          })
+          .catch(err => {
+            alert(err);
+          });
       } else {
         await api
-          .post("/students", { matriculation: id, password, imei })
+          .get("/students")
           .then(() => {
             history.push("/confirmation");
           })
