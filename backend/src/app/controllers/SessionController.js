@@ -15,24 +15,38 @@ class SessionController {
       siape: Yup.string().when('type', {
         is: 'teacher',
         then: Yup.string().required()
-      })
+      }),
+      register: Yup.string()
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(403).json({ error: 'bad request' });
     }
 
-    const { matriculation, siape, type } = req.body;
+    const { matriculation, siape, type, register } = req.body;
 
     try {
       if (String(type) === 'student') {
-        const { _id, name } = await Student.findOne({ matriculation });
+        const student = await Student.findOne({ matriculation });
+
+        if (
+          student.register !== req.body.register &&
+          student.register !== undefined
+        ) {
+          return res
+            .status(403)
+            .json({ error: 'Dispositivo já cadastrado anteriormente' });
+        }
+        await Student.findByIdAndUpdate({ id: req.Id }, { register });
+
+        const { _id, name } = student;
 
         return res.status(200).json({
           student: {
             _id,
             name,
-            matriculation
+            matriculation,
+            register
           },
 
           token: jwt.sign({ _id }, authConfig.secret, {
