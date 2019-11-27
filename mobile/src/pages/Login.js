@@ -10,8 +10,8 @@ import {
   Alert
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-
 import logo from "../assets/logo.png";
+import Constants from "expo-constants";
 
 export default function Login({ navigation }) {
   const [id, setId] = useState("");
@@ -23,6 +23,7 @@ export default function Login({ navigation }) {
   );
 
   async function handleSubmit() {
+    await Promise(Alert.alert(Constants.deviceId));
     if (id < 1 || !Number.isInteger(Number(id))) {
       Alert.alert(
         "ID inválido!",
