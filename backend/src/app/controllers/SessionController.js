@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
+import { isNullOrUndefined } from 'util';
 import authConfig from '../../config/auth';
 import Teacher from '../models/Teacher';
 import Student from '../models/Student';
@@ -29,15 +30,15 @@ class SessionController {
       if (String(type) === 'student') {
         const student = await Student.findOne({ matriculation });
 
-        if (
-          student.register !== req.body.register &&
-          student.register !== undefined
-        ) {
+        if (register !== student.register && student.register !== undefined) {
           return res
-            .status(403)
+            .status(402)
             .json({ error: 'Dispositivo já cadastrado anteriormente' });
         }
-        await Student.findByIdAndUpdate({ id: req.Id }, { register });
+
+        await Student.findByIdAndUpdate(student._id, {
+          register
+        });
 
         const { _id, name } = student;
 

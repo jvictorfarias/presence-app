@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -7,23 +7,31 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import logo from "../assets/logo.png";
 import Constants from "expo-constants";
+import api from "../services/api";
 
 export default function Login({ navigation }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState(null);
   const [captcha, setCaptcha] = useState("");
-  const [captchaURL, setCaptchaURL] = useState(
-    "https://academico.quixada.ufc.br/sippa/captcha.jpg"
-  );
+  /*
+  useEffect(() => {
+    AsyncStorage.getItem("tokenSession").then(tokenSession => {
+      if (tokenSession) {
+        navigation.navigate("");
+      }
+      
+  }, []);
+
+  */
 
   async function handleSubmit() {
-    await Promise(Alert.alert(Constants.deviceId));
     if (id < 1 || !Number.isInteger(Number(id))) {
       Alert.alert(
         "ID inválido!",
@@ -40,10 +48,52 @@ export default function Login({ navigation }) {
       return false;
     }
 
-    if (type === "aluno") {
-      navigation.navigate("Confirmation");
+    if (type === "teacher") {
+      try {
+        const siape = id;
+        const response = api.post("/session", { siape, password, type });
+
+        const { token } = response.data;
+        Alert.alert(token);
+        await AsyncStorage.setItem("tokenSession", token);
+        navigation.navigate("Management");
+      } catch (error) {
+        if (error.status === 403) {
+          Alert.alert("Credenciais Incorretas!");
+        }
+
+        if (error.status === 400) {
+          Alert.alert("Servidor Offline");
+        }
+      }
     } else {
-      navigation.navigate("Management");
+      try {
+        const deviceId = Constants.deviceId;
+        const matriculation = id;
+        const response = await api.post("/session", {
+          matriculation,
+          password,
+          type,
+          register: deviceId
+        });
+
+        const { token } = response.data;
+        Alert.alert(token);
+        await AsyncStorage.setItem("tokenSession", token);
+        navigation.navigate("Confirmation");
+      } catch (error) {
+        if (error.status === 403) {
+          Alert.alert("Credenciais Incorretas!");
+        }
+
+        if (error.status === 402) {
+          Alert.alert("Dispositivo diferente!");
+        }
+
+        if (error.status === 400) {
+          Alert.alert("Servidor Offline");
+        }
+      }
     }
   }
 
@@ -85,8 +135,8 @@ export default function Login({ navigation }) {
             color: "#999"
           }}
           items={[
-            { label: "Aluno", value: "aluno" },
-            { label: "Professor", value: "professor" }
+            { label: "Aluno", value: "student" },
+            { label: "Professor", value: "teacher" }
           ]}
         />
         <View style={styles.captchaView}>

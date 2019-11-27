@@ -16,7 +16,7 @@ const student = new Schema({
     required: true
   },
 
-  imei: {
+  register: {
     type: String,
     required: false
   }
