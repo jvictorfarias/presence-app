@@ -30,19 +30,22 @@ export default function Login({ history }) {
     } else {
       if (type === "professor") {
         const response = await api
-          .post("/teachers", { siape: id, password })
+          .post("/session", { siape: id, password, type })
           .then(() => {
             const { token } = response.data;
             localStorage.setItem("tokenSession", token);
+            console.log(token);
             history.push("/management");
           })
           .catch(alert("error"));
       } else {
+        const matriculation = id;
         const response = await api
-          .post("/students", { matriculation: id, password })
+          .post("/session", { matriculation, password, type })
           .then(() => {
             const { token } = response.data;
             localStorage.setItem("tokenSession", token);
+            console.log(token);
             history.push("/confirmation");
           })
           .catch(alert("error"));
@@ -82,8 +85,8 @@ export default function Login({ history }) {
             <option disabled selected value>
               Aluno / Professor
             </option>
-            <option value="aluno">Aluno</option>
-            <option value="professor">Professor</option>
+            <option value="student">Aluno</option>
+            <option value="teacher">Professor</option>
           </select>
 
           <div className="captchaDiv">
