@@ -20,19 +20,18 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [type, setType] = useState(null);
   const [captcha, setCaptcha] = useState("");
-
   /*
   useEffect(() => {
     AsyncStorage.getItem("tokenSession").then(tokenSession => {
       if (tokenSession) {
         navigation.navigate("");
       }
-    });
+      
   }, []);
+
   */
 
   async function handleSubmit() {
-    //await Promise(Alert.alert(Constants.deviceId));
     if (id < 1 || !Number.isInteger(Number(id))) {
       Alert.alert(
         "ID inválido!",
@@ -50,25 +49,51 @@ export default function Login({ navigation }) {
     }
 
     if (type === "teacher") {
-      const siape = id;
+      try {
+        const siape = id;
+        const response = api.post("/session", { siape, password, type });
 
-      const response = await api.post("/session", { siape, password, type });
-      const { token } = response.data;
-      Alert.alert(token);
-      await AsyncStorage.setItem("tokenSession", token);
-      navigation.navigate("Management");
+        const { token } = response.data;
+        Alert.alert(token);
+        await AsyncStorage.setItem("tokenSession", token);
+        navigation.navigate("Management");
+      } catch (error) {
+        if (error.status === 403) {
+          Alert.alert("Credenciais Incorretas!");
+        }
+
+        if (error.status === 400) {
+          Alert.alert("Servidor Offline");
+        }
+      }
     } else {
-      const matriculation = id;
-      const response = await api.post("/session", {
-        matriculation,
-        password,
-        type
-      });
-      const { token } = response.data;
-      Alert.alert(token);
-      console.log(token);
-      await AsyncStorage.setItem("tokenSession", token);
-      navigation.navigate("Confirmation");
+      try {
+        const deviceId = Constants.deviceId;
+        const matriculation = id;
+        const response = await api.post("/session", {
+          matriculation,
+          password,
+          type,
+          register: deviceId
+        });
+
+        const { token } = response.data;
+        Alert.alert(token);
+        await AsyncStorage.setItem("tokenSession", token);
+        navigation.navigate("Confirmation");
+      } catch (error) {
+        if (error.status === 403) {
+          Alert.alert("Credenciais Incorretas!");
+        }
+
+        if (error.status === 402) {
+          Alert.alert("Dispositivo diferente!");
+        }
+
+        if (error.status === 400) {
+          Alert.alert("Servidor Offline");
+        }
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
+import { isNullOrUndefined } from 'util';
 import authConfig from '../../config/auth';
 import Teacher from '../models/Teacher';
 import Student from '../models/Student';
@@ -15,24 +16,38 @@ class SessionController {
       siape: Yup.string().when('type', {
         is: 'teacher',
         then: Yup.string().required()
-      })
+      }),
+      register: Yup.string()
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(403).json({ error: 'bad request' });
     }
 
-    const { matriculation, siape, type } = req.body;
+    const { matriculation, siape, type, register } = req.body;
 
     try {
       if (String(type) === 'student') {
-        const { _id, name } = await Student.findOne({ matriculation });
+        const student = await Student.findOne({ matriculation });
+
+        if (register !== student.register && student.register !== undefined) {
+          return res
+            .status(402)
+            .json({ error: 'Dispositivo já cadastrado anteriormente' });
+        }
+
+        await Student.findByIdAndUpdate(student._id, {
+          register
+        });
+
+        const { _id, name } = student;
 
         return res.status(200).json({
           student: {
             _id,
             name,
-            matriculation
+            matriculation,
+            register
           },
 
           token: jwt.sign({ _id }, authConfig.secret, {

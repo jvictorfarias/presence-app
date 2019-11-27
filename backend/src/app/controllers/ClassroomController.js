@@ -16,31 +16,31 @@ class ClassroomController {
     const { type } = req.params;
 
     if (String(type) === 'student') {
-      const disciplines = await Discipline.aggregate([
-        { $unwind: '$students' },
-        {
-          $lookup: {
-            from: 'students',
-            localField: 'students',
-            foreignField: '_id',
-            as: 'students_disciplines'
-          }
-        },
-        { $unwind: 'students_disciplines' },
-        {
-          $group: {
-            _id: '$_id',
-            students: { $push: '$students' },
-            students_disciplines: { $push: '$students_disciplines' }
-          }
-        }
-      ]);
+      const [disciplines] = await Discipline.find({});
 
-      return res.status(200).json(disciplines);
+      const { name, cod } = disciplines;
+
+      return res.status(200).json({
+        name,
+        cod
+      });
+    }
+
+    if (String(type) === 'teacher') {
+      const [disciplines] = await Discipline.find({});
+
+      const { name, cod } = disciplines;
+
+      return res.status(200).json({
+        name,
+        cod
+      });
     }
 
     return res.status(400).json({ error: 'Not found' });
   }
+
+  async index(req, res) {}
 }
 
 export default new ClassroomController();

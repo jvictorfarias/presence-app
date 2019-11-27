@@ -48,7 +48,7 @@ export default function Login({ history }) {
             console.log(token);
             history.push("/confirmation");
           })
-          .catch(alert("error"));
+          .catch(err => alert(err));
       }
     }
   }

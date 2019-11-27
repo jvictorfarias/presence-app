@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import Discipline from '../models/Discipline';
-import Student from '../models/Student';
 import Teacher from '../models/Teacher';
 
 class DisciplineController {
@@ -21,14 +20,12 @@ class DisciplineController {
 
     const { name, cod, class_time } = req.body;
 
-    const students = await Student.find({});
     const teacher = await Teacher.findOne({ siape: 'arthur@ufc.br' });
     const discipline = await Discipline.create({
       name,
       cod,
       class_time,
-      teacher: teacher._id,
-      students
+      teacher: teacher._id
     });
 
     return res.status(200).json(discipline);
