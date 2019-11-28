@@ -9,8 +9,10 @@ import {
 } from "react-native";
 
 import logo from "../assets/logo.png";
+import present from "../assets/situation-present.png";
+import absent from "../assets/situation-absent.png";
 
-export default function Management() {
+export default function ManagementStudents() {
   return (
     <View style={styles.container}>
       <Image source={logo} />
@@ -26,12 +28,16 @@ export default function Management() {
             <Text style={styles.name}>Jamerson Alves Aguiar da Silva</Text>
             <Text style={styles.info}>418866</Text>
             <Text style={styles.info}>Presenças: 8 / Faltas: 2</Text>
+            <Text style={styles.info}>Situação:</Text>
+            <Image style={styles.situationImage} source={present}></Image>
           </View>
           <View style={styles.card}>
             <Text style={styles.info}>Aluno</Text>
             <Text style={styles.name}>João Victor Oliveira Farias</Text>
             <Text style={styles.info}>418266</Text>
             <Text style={styles.info}>Presenças: 8 / Faltas: 4</Text>
+            <Text style={styles.info}>Situação:</Text>
+            <Image style={styles.situationImage} source={absent}></Image>
           </View>
         </ScrollView>
       </View>
@@ -67,6 +73,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#444",
     margin: 5
+  },
+  situationImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: "contain"
   },
   name: {
     fontSize: 32

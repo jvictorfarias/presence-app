@@ -56,7 +56,8 @@ export default function Login({ navigation }) {
         const { token } = response.data;
         Alert.alert(token);
         await AsyncStorage.setItem("tokenSession", token);
-        navigation.navigate("Management");
+
+        navigation.navigate("ManagementDisciplines");
       } catch (error) {
         if (error.status === 403) {
           Alert.alert("Credenciais Incorretas!");

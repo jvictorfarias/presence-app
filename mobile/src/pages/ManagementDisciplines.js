@@ -5,15 +5,16 @@ import {
   StyleSheet,
   Image,
   Text,
-  TouchableOpacity,
-  AsyncStorage
+  TouchableOpacity
 } from "react-native";
 
 import logo from "../assets/logo.png";
-import api from "../services/api";
 
-export default function Confirmation() {
+export default function ManagementDisciplines({ navigation }) {
   const [disciplines, setDisciplines] = useState([]);
+  async function handlePress() {
+    navigation.navigate("ManagementStudents");
+  }
 
   useEffect(() => {
     async function loadDisciplines() {
@@ -41,7 +42,7 @@ export default function Confirmation() {
               <Text style={styles.info}>{discipline.class_time}</Text>
 
               <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>CONFIRMAR PRESENÇA</Text>
+                <Text style={styles.buttonText}>LISTA DE PRESENÇA</Text>
               </TouchableOpacity>
             </View>
           ))}

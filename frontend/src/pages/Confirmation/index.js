@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./styles.css";
 
+import api from "../../services/api";
+
 export default function Confirmation() {
+  const [disciplines, setDisciplines] = useState([]);
+
+  useEffect(() => {
+    async function loadDisciplines() {
+      const tokenSession = localStorage.getItem("tokenSession");
+      const response = await api.get("/disciplines", {});
+      setDisciplines(response.data);
+    }
+
+    loadDisciplines();
+  }, []);
+
   return (
     <>
       <div className="contentC">
         <p>Disciplinas do Aluno</p>
 
         <ul className="class-list">
+          {disciplines.map(discipline => (
+            <li>
+              <header>{discipline.name}</header>
+              <strong>{discipline.cod}</strong>
+              <span>{discipline.class_time}</span>
+              <button className="btn" type="submit">
+                CONFIRMAR PRESENÇA
+              </button>
+            </li>
+          ))}
+
+          {/*
           <li>
             <header>Redes de Comunicação Móveis</header>
             <strong>Sala 3 - Bloco 1</strong>
@@ -36,6 +62,7 @@ export default function Confirmation() {
               CONFIRMAR PRESENÇA
             </button>
           </li>
+          */}
         </ul>
       </div>
     </>
