@@ -7,7 +7,6 @@ class Student extends Model {
       {
         name: Sequelize.STRING,
         matriculation: Sequelize.STRING,
-        password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         register: Sequelize.STRING
       },
@@ -17,7 +16,7 @@ class Student extends Model {
     );
 
     this.addHook('beforeSave', async student => {
-      if (student.password) {
+      if (student.matriculation) {
         student.password_hash = await bcrypt.hash(student.matriculation, 8);
       }
     });
@@ -28,9 +27,8 @@ class Student extends Model {
   static associate(models) {
     this.belongsToMany(models.Discipline, {
       through: 'students_disciplines',
-      foreignKey: 'student',
-      otherKey: 'discipline',
-      as: 'student'
+      foreignKey: 'student_id',
+      otherKey: 'discipline_id'
     });
   }
 

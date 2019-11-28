@@ -4,8 +4,9 @@ import databaseConfig from '../config/database';
 import Discipline from '../app/models/Discipline';
 import Teacher from '../app/models/Teacher';
 import Student from '../app/models/Student';
+import StudentDiscipline from '../app/models/StudentsDisciplines';
 
-const models = [Discipline, Teacher, Student];
+const models = [Discipline, Teacher, Student, StudentDiscipline];
 class Database {
   constructor() {
     this.mongo();

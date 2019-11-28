@@ -67,7 +67,7 @@ class StudentController {
       }
     });
 
-    if (student.register !== register && student.register !== undefined) {
+    if (student.register !== register && student.register !== null) {
       return res
         .status(403)
         .json({ error: 'Dispositivo já cadastrado anteriormente' });

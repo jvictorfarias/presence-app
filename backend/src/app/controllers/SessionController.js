@@ -29,13 +29,13 @@ class SessionController {
       if (String(type) === 'student') {
         const student = await Student.findOne({ where: { matriculation } });
 
-        if (register !== student.register && student.register !== undefined) {
+        if (register !== student.register && student.register !== null) {
           return res
             .status(402)
             .json({ error: 'Dispositivo já cadastrado anteriormente' });
         }
 
-        await Student.update({ register });
+        // await Student.update({ register });
 
         const { id, name } = student;
 

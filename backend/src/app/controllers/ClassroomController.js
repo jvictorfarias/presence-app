@@ -1,10 +1,17 @@
 import * as Yup from 'yup';
 // import Classroom from '../models/Classroom';
 import Discipline from '../models/Discipline';
-import Teacher from '../models/Teacher';
+import StudentDiscipline from '../models/StudentsDisciplines';
 import Student from '../models/Student';
 
 class ClassroomController {
+  async store(req, res) {
+    const { discipline_id, student_id } = req.body;
+    const sdisc = await StudentDiscipline.create({ discipline_id, student_id });
+
+    return res.status(200).json(sdisc);
+  }
+
   async show(req, res) {
     const schema = Yup.object().shape({
       type: Yup.string().required()
@@ -16,22 +23,23 @@ class ClassroomController {
     const { type } = req.params;
 
     if (String(type) === 'student') {
-      const student = await Student.findById(req.userId);
-      const disciplines = await Discipline.find({
-        $and: [{ students: { $eq: student } }]
+      const disciplines = await Discipline.findAll({
+        attributes: ['id', 'name', 'class_time'],
+        include: [
+          {
+            model: Student,
+            attributes: [],
+            where: { id: req.userId },
+            through: {
+              model: StudentDiscipline,
+              key: 'student_id',
+              as: 'student_disc'
+            }
+          }
+        ]
       });
 
-      const name = [];
-      const cod = [];
-      disciplines.map(discipline => {
-        name.push(discipline.name);
-        cod.push(discipline.code, discipline.name);
-      });
-
-      return res.status(200).json({
-        name,
-        cod
-      });
+      return res.status(200).json(disciplines);
     }
 
     if (String(type) === 'teacher') {

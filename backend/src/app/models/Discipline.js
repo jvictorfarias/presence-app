@@ -18,13 +18,12 @@ class Discipline extends Model {
   static associate(models) {
     this.belongsTo(models.Teacher, {
       foreignKey: 'teacher_id',
-      as: 'teachers'
+      as: 'teacher'
     });
     this.belongsToMany(models.Student, {
       through: 'students_disciplines',
       foreignKey: 'discipline_id',
-      otherKey: 'student_id',
-      as: 'discipline'
+      otherKey: 'student_id'
     });
   }
 }
