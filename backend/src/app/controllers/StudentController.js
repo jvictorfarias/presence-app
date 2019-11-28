@@ -26,29 +26,13 @@ class StudentController {
      * Verifica se já existe algum aluno com essa matrícula
      */
 
-    if (await Student.findOne({ matriculation })) {
+    if (await Student.findOne({ where: { matriculation } })) {
       return res.status(401).json({ error: 'student already exists' });
     }
 
-    const reversed = String(matriculation)
-      .split('')
-      .reverse()
-      .join('');
-
-    /** Encripta a senha do aluno  */
-    const password_hash = await bcrypt.hash(reversed, 8);
-
-    /**
-     * Cria o aluno
-     */
-
-    const { _id } = await Student.create({
-      name,
-      matriculation,
-      password_hash
-    });
+    const { id } = await Student.create(req.body);
     return res.json({
-      _id,
+      id,
       name,
       matriculation
     });
@@ -78,7 +62,9 @@ class StudentController {
      * Busca pelo usuário já validado
      */
     const student = await Student.findOne({
-      matriculation
+      where: {
+        matriculation
+      }
     });
 
     if (student.register !== register && student.register !== undefined) {
@@ -101,12 +87,10 @@ class StudentController {
     if (!(await bcrypt.compare(password, student.password_hash))) {
       return res.status(401).json({ error: 'Wrong password' });
     }
-    /**
-     * Retorna o usuário para que ele possa ser direcionado ao feed
-     */
-    const { _id, name } = student;
+
+    const { id, name } = student;
     return res.status(200).json({
-      _id,
+      id,
       name,
       matriculation
     });

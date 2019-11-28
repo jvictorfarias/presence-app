@@ -18,7 +18,7 @@ class Student extends Model {
 
     this.addHook('beforeSave', async student => {
       if (student.password) {
-        student.password_hash = await bcrypt.hash(student.password, 8);
+        student.password_hash = await bcrypt.hash(student.matriculation, 8);
       }
     });
 
@@ -26,7 +26,12 @@ class Student extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Discipline, { foreignKey: 'discipline_id' });
+    this.belongsToMany(models.Discipline, {
+      through: 'students_disciplines',
+      foreignKey: 'student',
+      otherKey: 'discipline',
+      as: 'student'
+    });
   }
 
   checkPassword(password) {

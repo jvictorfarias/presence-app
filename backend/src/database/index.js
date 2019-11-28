@@ -9,6 +9,7 @@ const models = [Discipline, Teacher, Student];
 class Database {
   constructor() {
     this.mongo();
+    this.init();
   }
 
   init() {

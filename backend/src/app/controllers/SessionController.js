@@ -27,7 +27,7 @@ class SessionController {
 
     try {
       if (String(type) === 'student') {
-        const student = await Student.findOne({ matriculation });
+        const student = await Student.findOne({ where: { matriculation } });
 
         if (register !== student.register && student.register !== undefined) {
           return res
@@ -35,36 +35,34 @@ class SessionController {
             .json({ error: 'Dispositivo já cadastrado anteriormente' });
         }
 
-        await Student.findByIdAndUpdate(student._id, {
-          register
-        });
+        await Student.update({ register });
 
-        const { _id, name } = student;
+        const { id, name } = student;
 
         return res.status(200).json({
           student: {
-            _id,
+            id,
             name,
             matriculation,
             register
           },
 
-          token: jwt.sign({ _id }, authConfig.secret, {
+          token: jwt.sign({ id }, authConfig.secret, {
             expiresIn: authConfig.expiresIn
           })
         });
       }
       if (String(type) === 'teacher') {
-        const { _id, name } = await Teacher.findOne({ siape });
+        const { id, name } = await Teacher.findOne({ where: { siape } });
 
         return res.status(200).json({
           teacher: {
-            _id,
+            id,
             name,
             siape
           },
 
-          token: jwt.sign({ _id }, authConfig.secret, {
+          token: jwt.sign({ id }, authConfig.secret, {
             expiresIn: authConfig.expiresIn
           })
         });

@@ -6,7 +6,7 @@ class Discipline extends Model {
       {
         name: Sequelize.STRING,
         cod: Sequelize.STRING,
-        time: Sequelize.STRING
+        class_time: Sequelize.STRING
       },
       {
         sequelize
@@ -16,8 +16,16 @@ class Discipline extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Teacher);
-    this.hasMany(models.Student);
+    this.belongsTo(models.Teacher, {
+      foreignKey: 'teacher_id',
+      as: 'teachers'
+    });
+    this.belongsToMany(models.Student, {
+      through: 'students_disciplines',
+      foreignKey: 'discipline_id',
+      otherKey: 'student_id',
+      as: 'discipline'
+    });
   }
 }
 

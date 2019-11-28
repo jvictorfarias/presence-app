@@ -19,6 +19,7 @@ class TeacherController {
      * Caso seja inválido, retorna status de erro
      */
 
+    const { name, siape, password } = req.body;
     if (!(await schema.isValid(req.body))) {
       return res.status(403).json({ error: 'Data not valid' });
     }
@@ -27,18 +28,11 @@ class TeacherController {
      * Verifica se já existe algum professor com essa matrícula
      */
 
-    if (await Teacher.findOne({ siape: req.body.siape })) {
+    if (await Teacher.findOne({ where: { siape } })) {
       return res.status(401).json({ error: 'Teacher already exists' });
     }
 
-    /**
-     * Cria o professor
-     */
-
-    /** Encripta a senha do professor */
-    req.body.password_hash = await bcrypt.hash(req.body.password, 8);
-
-    const { id, name, siape } = await Teacher.create(req.body);
+    const { id } = await Teacher.create(req.body);
     return res.json({
       id,
       name,
