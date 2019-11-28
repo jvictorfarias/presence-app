@@ -17,12 +17,15 @@ export default function Confirmation() {
 
   useEffect(() => {
     async function loadDisciplines() {
-      const tokenSession = AsyncStorage.getItem("tokenSession");
-      const response = await api.get("/classroom", {});
+      const authorization = AsyncStorage.getItem("tokenSession");
+      const response = await api.get("/classroom/student", {
+        headers: authorization
+      });
       setDisciplines(response.data);
     }
     loadDisciplines();
-  }, []);
+    console.log(disciplines);
+  }, [disciplines.id]);
 
   return (
     <View style={styles.container}>
