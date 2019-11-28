@@ -16,6 +16,7 @@ routes.post('/session', SessionController.store);
 /** Rotas para alunos */
 routes.post('/students', StudentController.store);
 routes.get('/students', StudentController.show);
+routes.get('/students/show', StudentController.index);
 
 /** Rotas para professores */
 
@@ -24,6 +25,7 @@ routes.post('/teachers', TeacherController.store);
 /** Rotas para disciplinas */
 
 routes.post('/disciplines', DisciplineController.store);
+routes.get('/disciplines', DisciplineController.index);
 
 /** Rotas para salas de aulas */
 routes.get('/classroom/:type/', authMiddleware, ClassroomController.show);

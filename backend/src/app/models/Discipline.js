@@ -1,39 +1,24 @@
-import mongoose, { Schema } from 'mongoose';
+import Sequelize, { Model } from 'sequelize';
 
-const discipline = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
+class Discipline extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        name: Sequelize.STRING,
+        cod: Sequelize.STRING,
+        time: Sequelize.STRING
+      },
+      {
+        sequelize
+      }
+    );
+    return this;
+  }
 
-  cod: {
-    type: String,
-    required: true
-  },
+  static associate(models) {
+    this.belongsTo(models.Teacher);
+    this.hasMany(models.Student);
+  }
+}
 
-  class_time: {
-    starts: {
-      type: Date,
-
-      required: false
-    },
-    ends: {
-      type: Date,
-      required: false
-    }
-  },
-
-  teacher: {
-    type: Schema.Types.ObjectId,
-    ref: 'teacher'
-  },
-
-  students: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'student'
-    }
-  ]
-});
-
-export default mongoose.model('discipline', discipline);
+export default Discipline;

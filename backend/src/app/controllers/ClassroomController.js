@@ -16,9 +16,17 @@ class ClassroomController {
     const { type } = req.params;
 
     if (String(type) === 'student') {
-      const [disciplines] = await Discipline.find({});
+      const student = await Student.findById(req.userId);
+      const disciplines = await Discipline.find({
+        $and: [{ students: { $eq: student } }]
+      });
 
-      const { name, cod } = disciplines;
+      const name = [];
+      const cod = [];
+      disciplines.map(discipline => {
+        name.push(discipline.name);
+        cod.push(discipline.code, discipline.name);
+      });
 
       return res.status(200).json({
         name,

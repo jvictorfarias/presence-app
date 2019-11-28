@@ -1,11 +1,25 @@
 import mongoose from 'mongoose';
+import Sequelize from 'sequelize';
+import databaseConfig from '../config/database';
+import Discipline from '../app/models/Discipline';
+import Teacher from '../app/models/Teacher';
+import Student from '../app/models/Student';
 
+const models = [Discipline, Teacher, Student];
 class Database {
   constructor() {
-    this.init();
+    this.mongo();
   }
 
   init() {
+    this.connection = new Sequelize(databaseConfig); // Start connection(init models)
+    // Init connection on all models
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
+  }
+
+  mongo() {
     this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

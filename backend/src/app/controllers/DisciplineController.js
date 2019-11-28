@@ -30,6 +30,11 @@ class DisciplineController {
 
     return res.status(200).json(discipline);
   }
+
+  async index(req, res) {
+    const disciplines = await Discipline.find({});
+    return res.status(400).json(disciplines);
+  }
 }
 
 export default new DisciplineController();

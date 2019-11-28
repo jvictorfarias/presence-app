@@ -111,6 +111,11 @@ class StudentController {
       matriculation
     });
   }
+
+  async index(req, res) {
+    const students = Student.find({});
+    return res.json(students);
+  }
 }
 
 export default new StudentController();

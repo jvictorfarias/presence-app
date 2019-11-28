@@ -15,6 +15,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
+    "sequelize-cli": "^5.5.1",
     "sucrase": "^3.10.1"
   },
   "dependencies": {
@@ -25,6 +26,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12",
     "morgan": "^1.9.1",
+    "pg": "^7.14.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.2",
     "yup": "^0.27.0"
   }
 }

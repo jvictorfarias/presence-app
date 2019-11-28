@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
-import { isNullOrUndefined } from 'util';
 import authConfig from '../../config/auth';
 import Teacher from '../models/Teacher';
 import Student from '../models/Student';

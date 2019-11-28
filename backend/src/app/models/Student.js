@@ -1,25 +1,37 @@
-import mongoose, { Schema } from 'mongoose';
+import Sequelize, { Model } from 'sequelize';
+import bcrypt from 'bcrypt';
 
-const student = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
+class Student extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        name: Sequelize.STRING,
+        matriculation: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
+        register: Sequelize.STRING
+      },
+      {
+        sequelize
+      }
+    );
 
-  matriculation: {
-    type: Number,
-    required: true
-  },
+    this.addHook('beforeSave', async student => {
+      if (student.password) {
+        student.password_hash = await bcrypt.hash(student.password, 8);
+      }
+    });
 
-  password_hash: {
-    type: String,
-    required: true
-  },
-
-  register: {
-    type: String,
-    required: false
+    return this;
   }
-});
 
-export default mongoose.model('student', student);
+  static associate(models) {
+    this.hasMany(models.Discipline, { foreignKey: 'discipline_id' });
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+  }
+}
+
+export default Student;
