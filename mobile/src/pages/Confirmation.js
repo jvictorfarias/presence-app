@@ -18,7 +18,7 @@ export default function Confirmation() {
   useEffect(() => {
     async function loadDisciplines() {
       const tokenSession = AsyncStorage.getItem("tokenSession");
-      const response = await api.get("/disciplines", {});
+      const response = await api.get("/classroom", {});
       setDisciplines(response.data);
     }
     loadDisciplines();

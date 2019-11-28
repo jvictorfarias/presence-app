@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -11,9 +11,19 @@ import {
 import logo from "../assets/logo.png";
 
 export default function ManagementDisciplines({ navigation }) {
+  const [disciplines, setDisciplines] = useState([]);
   async function handlePress() {
     navigation.navigate("ManagementStudents");
   }
+
+  useEffect(() => {
+    async function loadDisciplines() {
+      const tokenSession = AsyncStorage.getItem("tokenSession");
+      const response = await api.get("/classroom", {});
+      setDisciplines(response.data);
+    }
+    loadDisciplines();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -25,33 +35,17 @@ export default function ManagementDisciplines({ navigation }) {
           contentContainerStyle={styles.contentContainer}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={styles.card}>
-            <Text style={styles.info}>Disciplina</Text>
-            <Text style={styles.name}>Redes de Comunicação Móvel</Text>
-            <Text style={styles.info}>
-              QUA - 20:00 às 22:00{"\n"}SEX - 18:00 às 20:00
-            </Text>
+          {disciplines.map(discipline => (
+            <View style={styles.card}>
+              <Text style={styles.info}>Disciplina</Text>
+              <Text style={styles.name}>{discipline.name}</Text>
+              <Text style={styles.info}>{discipline.class_time}</Text>
 
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText} onPress={handlePress}>
-                LISTA DE PRESENÇA
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.info}>Disciplina</Text>
-            <Text style={styles.name}>Sistemas Distribuídos</Text>
-            <Text style={styles.info}>
-              SEG - 20:00 às 22:00{"\n"}TER - 20:00 às 22:00
-            </Text>
-
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText} onPress={handlePress}>
-                LISTA DE PRESENÇA
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>LISTA DE PRESENÇA</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
         </ScrollView>
       </View>
     </View>
