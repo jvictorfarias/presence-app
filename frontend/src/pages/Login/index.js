@@ -29,8 +29,9 @@ export default function Login({ history }) {
       return false;
     } else {
       if (type === "professor") {
-        await api
-          .post("session", { siape: id, password, type })
+        await api;
+        const siape = id
+          .post("session", { siape, password, type })
           .then(response => {
             const { token } = response.data;
             localStorage.setItem("tokenSession", token);

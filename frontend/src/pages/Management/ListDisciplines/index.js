@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import api from "../../../services/api";
 
 import "./styles.css";
 
 export default function Confirmation({ history }) {
+  const [disciplines, setDisciplines] = useState([]);
+
+  useEffect(() => {
+    async function loadDisciplines() {
+      const tokenSession = localStorage.getItem("tokenSession");
+      const response = await api.get("/disciplines", {});
+      setDisciplines(response.data);
+    }
+
+    loadDisciplines();
+  }, []);
+
   function handleClick(event) {
     event.preventDefault();
     history.push("/management/students");
@@ -14,6 +28,18 @@ export default function Confirmation({ history }) {
         <p>Disciplinas do Professor</p>
 
         <ul className="class-list">
+          {disciplines.map(discipline => (
+            <li>
+              <header>{discipline.name}</header>
+              <strong>{discipline.cod}</strong>
+              <span>{discipline.class_time}</span>
+              <button className="btn" type="submit" onClick={handleClick}>
+                LISTA DE PRESENÇA
+              </button>
+            </li>
+          ))}
+
+          {/*
           <li>
             <header>Redes de Comunicação Móveis</header>
             <strong>Sala 3 - Bloco 1</strong>
@@ -41,6 +67,7 @@ export default function Confirmation({ history }) {
               LISTA DE PRESENÇA
             </button>
           </li>
+           */}
         </ul>
       </div>
     </>
