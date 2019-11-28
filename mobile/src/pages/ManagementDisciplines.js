@@ -10,7 +10,11 @@ import {
 
 import logo from "../assets/logo.png";
 
-export default function Management() {
+export default function ManagementDisciplines({ navigation }) {
+  async function handlePress() {
+    navigation.navigate("ManagementStudents");
+  }
+
   return (
     <View style={styles.container}>
       <Image source={logo} />
@@ -22,23 +26,34 @@ export default function Management() {
           showsHorizontalScrollIndicator={false}
         >
           <View style={styles.card}>
-            <Text style={styles.info}>Aluno</Text>
-            <Text style={styles.name}>Jamerson Alves Aguiar da Silva</Text>
-            <Text style={styles.info}>418866</Text>
-            <Text style={styles.info}>Presenças: 8 / Faltas: 2</Text>
+            <Text style={styles.info}>Disciplina</Text>
+            <Text style={styles.name}>Redes de Comunicação Móvel</Text>
+            <Text style={styles.info}>
+              QUA - 20:00 às 22:00{"\n"}SEX - 18:00 às 20:00
+            </Text>
+
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText} onPress={handlePress}>
+                LISTA DE PRESENÇA
+              </Text>
+            </TouchableOpacity>
           </View>
+
           <View style={styles.card}>
-            <Text style={styles.info}>Aluno</Text>
-            <Text style={styles.name}>João Victor Oliveira Farias</Text>
-            <Text style={styles.info}>418266</Text>
-            <Text style={styles.info}>Presenças: 8 / Faltas: 4</Text>
+            <Text style={styles.info}>Disciplina</Text>
+            <Text style={styles.name}>Sistemas Distribuídos</Text>
+            <Text style={styles.info}>
+              SEG - 20:00 às 22:00{"\n"}TER - 20:00 às 22:00
+            </Text>
+
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText} onPress={handlePress}>
+                LISTA DE PRESENÇA
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>GERAR PDF</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -72,14 +87,14 @@ const styles = StyleSheet.create({
     fontSize: 32
   },
   button: {
-    height: 42,
-    marginTop: 25,
-    alignSelf: "stretch",
-    marginHorizontal: 25,
     backgroundColor: "#f34545",
+    borderRadius: 2,
+    alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 2
+    marginHorizontal: 25,
+    marginTop: 10,
+    height: 30
   },
   buttonText: {
     color: "#FFF",

@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   ScrollView,
   View,
   StyleSheet,
   Image,
   Text,
-  TouchableOpacity,
-  AsyncStorage
+  TouchableOpacity
 } from "react-native";
 
 import logo from "../assets/logo.png";
-import api from "../services/api";
 
-export default function Confirmation() {
-  const [disciplines, setDisciplines] = useState([]);
-
-  useEffect(() => {
-    async function loadDisciplines() {
-      const tokenSession = AsyncStorage.getItem("tokenSession");
-      const response = await api.get("/disciplines", {});
-      setDisciplines(response.data);
-    }
-    loadDisciplines();
-  }, []);
-
+export default function ManagementStudents() {
   return (
     <View style={styles.container}>
       <Image source={logo} />
@@ -34,19 +21,24 @@ export default function Confirmation() {
           contentContainerStyle={styles.contentContainer}
           showsHorizontalScrollIndicator={false}
         >
-          {disciplines.map(discipline => (
-            <View style={styles.card}>
-              <Text style={styles.info}>Disciplina</Text>
-              <Text style={styles.name}>{discipline.name}</Text>
-              <Text style={styles.info}>{discipline.class_time}</Text>
-
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>CONFIRMAR PRESENÇA</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+          <View style={styles.card}>
+            <Text style={styles.info}>Aluno</Text>
+            <Text style={styles.name}>Jamerson Alves Aguiar da Silva</Text>
+            <Text style={styles.info}>418866</Text>
+            <Text style={styles.info}>Presenças: 8 / Faltas: 2</Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.info}>Aluno</Text>
+            <Text style={styles.name}>João Victor Oliveira Farias</Text>
+            <Text style={styles.info}>418266</Text>
+            <Text style={styles.info}>Presenças: 8 / Faltas: 4</Text>
+          </View>
         </ScrollView>
       </View>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>GERAR PDF</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -80,14 +72,14 @@ const styles = StyleSheet.create({
     fontSize: 32
   },
   button: {
-    backgroundColor: "#f34545",
-    borderRadius: 2,
+    height: 42,
+    marginTop: 25,
     alignSelf: "stretch",
+    marginHorizontal: 25,
+    backgroundColor: "#f34545",
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 25,
-    marginTop: 10,
-    height: 30
+    borderRadius: 2
   },
   buttonText: {
     color: "#FFF",
