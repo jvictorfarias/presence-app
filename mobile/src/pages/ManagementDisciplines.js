@@ -18,8 +18,10 @@ export default function ManagementDisciplines({ navigation }) {
 
   useEffect(() => {
     async function loadDisciplines() {
-      const tokenSession = AsyncStorage.getItem("tokenSession");
-      const response = await api.get("/classroom", {});
+      const authorization = AsyncStorage.getItem("tokenSession");
+      const response = await api.get("/classroom/teachers", {
+        headers: authorization
+      });
       setDisciplines(response.data);
     }
     loadDisciplines();
