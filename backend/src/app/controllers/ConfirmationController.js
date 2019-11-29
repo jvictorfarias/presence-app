@@ -6,7 +6,10 @@ class ConfirmationController {
       where: { student_id: req.userId }
     });
 
+    let newHit = relation.hit;
+    newHit += 1;
     relation.set({ present: true });
+    relation.set({ hit: newHit });
     relation.save();
     const { discipline_id } = relation;
 

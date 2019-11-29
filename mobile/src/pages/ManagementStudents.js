@@ -34,8 +34,6 @@ export default function ManagementStudents() {
     loadStudents();
   }, [students.id]);
 
-  const widthArr = [250, 90, 75, 75, 90];
-
   return (
     <View style={styles.container}>
       <Image source={logo} />

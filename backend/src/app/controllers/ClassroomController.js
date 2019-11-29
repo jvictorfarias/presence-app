@@ -33,7 +33,8 @@ class ClassroomController {
             through: {
               model: StudentDiscipline,
               key: 'student_id',
-              as: 'student_disc'
+              as: 'student_disc',
+              where: { present: false }
             }
           }
         ]
@@ -67,7 +68,6 @@ class ClassroomController {
       ]
     });
 
-    console.log(studentsFromDiscipline);
     return res.status(200).json(studentsFromDiscipline);
   }
 }

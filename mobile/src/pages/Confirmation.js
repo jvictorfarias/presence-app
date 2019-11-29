@@ -16,7 +16,6 @@ import config from "../config/env";
 
 export default function Confirmation() {
   const [disciplines, setDisciplines] = useState([]);
-  const [colorButton, setColorButton] = useState("#f34545");
 
   async function handlePress(e) {
     const auth = await AsyncStorage.getItem("tokenSession");
@@ -29,8 +28,10 @@ export default function Confirmation() {
 
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
-    socket.on("present", () => {
-      setColorButton("green");
+    socket.on("present", disciplineConfirmed => {
+      setDisciplines(
+        disciplines.filter(discipline => discipline.id !== disciplineConfirmed)
+      );
     });
 
     async function loadDisciplines() {
@@ -62,7 +63,7 @@ export default function Confirmation() {
 
               <TouchableOpacity
                 style={{
-                  backgroundColor: colorButton,
+                  backgroundColor: "#f34545",
                   borderRadius: 2,
                   alignSelf: "stretch",
                   justifyContent: "center",
