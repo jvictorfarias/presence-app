@@ -55,12 +55,19 @@ export default function ManagementStudents() {
 
   return (
     <View style={styles.container}>
-      <Image source={logo} style={{ marginTop: 35 }} />
+      <Image source={logo} style={{ marginTop: 135 }} />
 
-      <View style={{ alignSelf: "stretch", paddingHorizontal: 20 }}>
+      <View
+        style={{
+          alignSelf: "stretch",
+          paddingHorizontal: 20,
+          marginTop: 25,
+          marginBottom: 75
+        }}
+      >
         <ScrollView
           contentContainerStyle={styles.contentContainer}
-          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
           {students.map(student => (
             <View style={styles.card} key={student.id}>
@@ -99,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: 250,
     alignSelf: "stretch",
-    marginTop: 25,
+    marginBottom: 25,
     marginHorizontal: 10,
     paddingHorizontal: 15,
     paddingVertical: 15
