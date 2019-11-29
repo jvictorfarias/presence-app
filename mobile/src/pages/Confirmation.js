@@ -6,7 +6,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from "react-native";
 import socketio from "socket.io-client";
 
@@ -30,6 +31,7 @@ export default function Confirmation() {
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
     socket.on("present", disciplineConfirmed => {
+      Alert.alert("Presença confirmada!");
       loadDisciplines();
       /*setDisciplines(
         disciplines.filter(discipline => discipline.id !== disciplineConfirmed)
