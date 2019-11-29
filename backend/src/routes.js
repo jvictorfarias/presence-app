@@ -29,5 +29,5 @@ routes.get('/disciplines', DisciplineController.index);
 /** Rotas para salas de aulas */
 routes.post('/classroom/:type', ClassroomController.store);
 routes.get('/classroom/:type', authMiddleware, ClassroomController.show);
-
+routes.get('/classroom', authMiddleware, ClassroomController.index);
 export default routes;

@@ -9,7 +9,7 @@ import StudentDiscipline from '../app/models/StudentsDisciplines';
 const models = [Discipline, Teacher, Student, StudentDiscipline];
 class Database {
   constructor() {
-    this.mongo();
+    // this.mongo();
     this.init();
   }
 

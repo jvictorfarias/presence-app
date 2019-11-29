@@ -1,3 +1,4 @@
 import app from './app';
 
-app.listen(process.env.APP_PORT);
+const server = app.server.listen(process.env.APP_PORT);
+app.io.listen(server);
