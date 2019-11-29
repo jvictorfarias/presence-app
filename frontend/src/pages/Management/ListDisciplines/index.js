@@ -9,8 +9,10 @@ export default function Confirmation({ history }) {
 
   useEffect(() => {
     async function loadDisciplines() {
-      const tokenSession = localStorage.getItem("tokenSession");
-      const response = await api.get("/disciplines", {});
+      const authorization = localStorage.getItem("tokenSession");
+      const response = await api.get("/disciplines", {
+        headers: authorization
+      });
       setDisciplines(response.data);
     }
 

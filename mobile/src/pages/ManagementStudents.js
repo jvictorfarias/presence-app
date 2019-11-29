@@ -7,37 +7,76 @@ import {
   Text,
   TouchableOpacity
 } from "react-native";
+import { Table, Row } from "react-native-table-component";
 
 import logo from "../assets/logo.png";
-import present from "../assets/situation-present.png";
-import absent from "../assets/situation-absent.png";
 
 export default function ManagementStudents() {
+  const widthArr = [250, 90, 75, 75, 90];
   return (
     <View style={styles.container}>
-      <Image source={logo} />
+      <Image source={logo} style={{ marginTop: 50 }} />
 
-      <View style={{ height: 350 }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff",
+          marginTop: 25,
+          alignSelf: "stretch",
+          borderRadius: 4,
+          marginHorizontal: 25,
+          paddingHorizontal: 15,
+          paddingVertical: 15
+        }}
+      >
         <ScrollView
           horizontal={true}
-          contentContainerStyle={styles.contentContainer}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={styles.card}>
-            <Text style={styles.info}>Aluno</Text>
-            <Text style={styles.name}>Jamerson Alves Aguiar da Silva</Text>
-            <Text style={styles.info}>418866</Text>
-            <Text style={styles.info}>Presenças: 8 / Faltas: 2</Text>
-            <Text style={styles.info}>Situação:</Text>
-            <Image style={styles.situationImage} source={present}></Image>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.info}>Aluno</Text>
-            <Text style={styles.name}>João Victor Oliveira Farias</Text>
-            <Text style={styles.info}>418266</Text>
-            <Text style={styles.info}>Presenças: 8 / Faltas: 4</Text>
-            <Text style={styles.info}>Situação:</Text>
-            <Image style={styles.situationImage} source={absent}></Image>
+          <View>
+            <Table>
+              <Row
+                data={["Aluno", "Matrícula", "Presenças", "Faltas", "Situação"]}
+                widthArr={widthArr}
+                style={{ height: 50, borderWidth: 1 }}
+                textStyle={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: 14
+                }}
+              ></Row>
+            </Table>
+
+            <ScrollView>
+              <Table>
+                <Row
+                  data={[
+                    "JAMERSON ALVES AGUIAR DA SILVA",
+                    "418866",
+                    "8",
+                    "2",
+                    "Presente"
+                  ]}
+                  widthArr={widthArr}
+                  style={styles.rowPresent}
+                  textStyle={styles.rowText}
+                ></Row>
+
+                <Row
+                  data={[
+                    "JOAO VICTOR OLIVEIRA FARIAS",
+                    "418082",
+                    "6",
+                    "4",
+                    "Ausente"
+                  ]}
+                  widthArr={widthArr}
+                  style={styles.rowAbsent}
+                  textStyle={styles.rowText}
+                ></Row>
+              </Table>
+            </ScrollView>
           </View>
         </ScrollView>
       </View>
@@ -83,6 +122,15 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 32
   },
+  rowPresent: { height: 40, backgroundColor: "#008000", borderWidth: 1 },
+  rowAbsent: { height: 40, backgroundColor: "#f34545", borderWidth: 1 },
+  rowText: {
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 12,
+    fontFamily: "Roboto",
+    fontWeight: "bold"
+  },
   button: {
     height: 42,
     marginTop: 25,
@@ -91,7 +139,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f34545",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 2
+    borderRadius: 2,
+    marginBottom: 25
   },
   buttonText: {
     color: "#FFF",
