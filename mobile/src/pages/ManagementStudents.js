@@ -25,6 +25,8 @@ export default function ManagementStudents() {
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
     socket.on("confirmation", studentConfirmed => {
+      loadStudents();
+      /*
       setStudents(
         students.map(student =>
           student.id === studentConfirmed
@@ -32,6 +34,7 @@ export default function ManagementStudents() {
             : student
         )
       );
+      */
     });
 
     async function loadStudents() {
