@@ -33,6 +33,7 @@ export default function Confirmation() {
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
     socket.on("present", disciplineConfirmed => {
+      Alert.alert("Presença confirmada!");
       loadDisciplines();
       /*setDisciplines(
         disciplines.filter(discipline => discipline.id !== disciplineConfirmed)

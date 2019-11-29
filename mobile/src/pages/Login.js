@@ -20,7 +20,6 @@ export default function Login({ navigation }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState(null);
-  const [captcha, setCaptcha] = useState("");
   /*
   useEffect(() => {
     AsyncStorage.getItem("tokenSession").then(tokenSession => {
@@ -138,28 +137,6 @@ export default function Login({ navigation }) {
             { label: "Professor", value: "teacher" }
           ]}
         />
-        <View style={styles.captchaView}>
-          <TextInput
-            style={styles.inputCaptcha}
-            placeholder="Captcha"
-            placeholderTextColor="#999"
-            autoCapitalize="none"
-            value={captcha}
-            onChangeText={setCaptcha}
-          />
-
-          <Image
-            style={{
-              height: 44,
-              width: 100,
-              position: "absolute",
-              alignSelf: "flex-end"
-            }}
-            source={{
-              uri: "https://academico.quixada.ufc.br/sippa/captcha.jpg"
-            }}
-          ></Image>
-        </View>
 
         <TouchableOpacity onPress={handleSubmit} style={styles.button}>
           <Text style={styles.buttonText}>ENTRAR</Text>
