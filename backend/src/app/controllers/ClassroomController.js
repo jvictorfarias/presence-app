@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import Discipline from '../models/Discipline';
 import StudentDiscipline from '../models/StudentsDisciplines';
 import Student from '../models/Student';
+import Teacher from '../models/Teacher';
 
 class ClassroomController {
   async store(req, res) {
@@ -43,14 +44,12 @@ class ClassroomController {
     }
 
     if (String(type) === 'teacher') {
-      const [disciplines] = await Discipline.find({});
-
-      const { name, cod } = disciplines;
-
-      return res.status(200).json({
-        name,
-        cod
+      const disciplines = await Discipline.findAll({
+        attributes: ['id', 'name', 'class_time'],
+        where: { teacher_id: req.userId }
       });
+
+      return res.status(200).json(disciplines);
     }
 
     return res.status(400).json({ error: 'Not found' });
