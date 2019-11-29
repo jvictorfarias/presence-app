@@ -56,13 +56,12 @@ class ClassroomController {
 
   async index(req, res) {
     const studentsFromDiscipline = await StudentDiscipline.findAll({
-      where: { discipline_id: 1 },
+      where: { discipline_id: req.body.discipline_id },
       attributes: ['hit', 'miss', 'present'],
       include: [
         {
           model: Student,
           attributes: ['name', 'matriculation'],
-          where: { id: 1 },
           as: 'student_disc'
         }
       ]
