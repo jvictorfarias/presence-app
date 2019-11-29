@@ -26,21 +26,21 @@ export default function Confirmation() {
       headers: { authorization: "bearer " + auth },
       body: { discipline_id: e }
     });
-
-    Alert.alert("Presença confirmada!");
   }
 
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
     socket.on("present", disciplineConfirmed => {
-      Alert.alert("Presença confirmada!");
-      loadDisciplines();
-      /*setDisciplines(
-        disciplines.filter(discipline => discipline.id !== disciplineConfirmed)
+      setDisciplines(
+        disciplines.map(discipline =>
+          discipline.id === disciplineConfirmed ? undefined : discipline
+        )
       );
-      */
+      Alert.alert("Presença confirmada!");
     });
+  });
 
+  useEffect(() => {
     async function loadDisciplines() {
       const authorization = await AsyncStorage.getItem("tokenSession");
 
