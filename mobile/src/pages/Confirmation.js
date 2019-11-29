@@ -6,7 +6,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from "react-native";
 import socketio from "socket.io-client";
 
@@ -25,6 +26,8 @@ export default function Confirmation() {
       headers: { authorization: "bearer " + auth },
       body: { discipline_id: e }
     });
+
+    Alert.alert("Presença confirmada!");
   }
 
   useEffect(() => {
