@@ -13,6 +13,7 @@ import socketio from "socket.io-client";
 import logo from "../assets/logo.png";
 import api from "../services/api";
 import config from "../config/env";
+console.disableYellowBox = true;
 
 export default function Confirmation() {
   const [disciplines, setDisciplines] = useState([]);

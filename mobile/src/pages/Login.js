@@ -14,6 +14,7 @@ import RNPickerSelect from "react-native-picker-select";
 import logo from "../assets/logo.png";
 import Constants from "expo-constants";
 import api from "../services/api";
+console.disableYellowBox = true;
 
 export default function Login({ navigation }) {
   const [id, setId] = useState("");

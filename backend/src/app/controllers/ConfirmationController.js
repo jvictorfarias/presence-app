@@ -11,9 +11,10 @@ class ConfirmationController {
     relation.set({ present: true });
     relation.set({ hit: newHit });
     relation.save();
-    const { discipline_id } = relation;
+    const { discipline_id, student_id } = relation;
 
     req.io.emit('present', discipline_id);
+    req.io.emit('confirmation', student_id);
     return res.status(200).json({ ok: 'ok' });
   }
 }

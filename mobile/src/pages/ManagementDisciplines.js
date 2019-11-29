@@ -13,6 +13,7 @@ import {
 import logo from "../assets/logo.png";
 
 import api from "../services/api";
+console.disableYellowBox = true;
 
 export default function ManagementDisciplines({ navigation }) {
   const [disciplines, setDisciplines] = useState([]);

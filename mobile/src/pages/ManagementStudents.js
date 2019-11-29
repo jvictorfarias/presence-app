@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import socketio from "socket.io-client";
 import {
   ScrollView,
   View,
@@ -10,16 +11,29 @@ import {
   Alert
 } from "react-native";
 
+import config from "../config/env";
 import logo from "../assets/logo.png";
 import api from "../services/api";
 import present from "../assets/situation-present.png";
 import absent from "../assets/situation-absent.png";
+console.disableYellowBox = true;
 
 export default function ManagementStudents() {
   const [students, setStudents] = useState([]);
   const [SArray, setSArray] = useState([]);
 
   useEffect(() => {
+    const socket = socketio(config.SERVER_URL);
+    socket.on("confirmation", studentConfirmed => {
+      setStudents(
+        students.map(student =>
+          student.id === studentConfirmed
+            ? ((student.present = true), (student.hit = student.hit += 1))
+            : student
+        )
+      );
+    });
+
     async function loadStudents() {
       const authorization = await AsyncStorage.getItem("tokenSession");
       const discipline = await AsyncStorage.getItem("disciplineChosen");
