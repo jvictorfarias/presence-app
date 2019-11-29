@@ -14,7 +14,6 @@ import logo from "../assets/logo.png";
 import api from "../services/api";
 
 export default function Confirmation() {
-  const socket = socketio("http://localhost:3333");
   const [disciplines, setDisciplines] = useState([]);
   const [colorButton, setColorButton] = useState("#f34545");
 
@@ -28,12 +27,11 @@ export default function Confirmation() {
   }
 
   useEffect(() => {
+    const socket = socketio("http://localhost:3333");
     socket.on("present", () => {
       setColorButton("green");
+      loadDisciplines();
     });
-  });
-
-  useEffect(() => {
     async function loadDisciplines() {
       const authorization = await AsyncStorage.getItem("tokenSession");
 

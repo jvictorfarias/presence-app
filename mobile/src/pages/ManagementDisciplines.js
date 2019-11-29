@@ -16,7 +16,8 @@ import api from "../services/api";
 
 export default function ManagementDisciplines({ navigation }) {
   const [disciplines, setDisciplines] = useState([]);
-  async function handlePress() {
+  async function handlePress(e) {
+    await AsyncStorage.setItem("disciplineChosen", e.toString());
     navigation.navigate("ManagementStudents");
   }
 
@@ -42,12 +43,15 @@ export default function ManagementDisciplines({ navigation }) {
           showsHorizontalScrollIndicator={false}
         >
           {disciplines.map(discipline => (
-            <View style={styles.card}>
+            <View style={styles.card} key={discipline.id}>
               <Text style={styles.info}>Disciplina</Text>
               <Text style={styles.name}>{discipline.name}</Text>
               <Text style={styles.info}>{discipline.class_time}</Text>
 
-              <TouchableOpacity style={styles.button} onPress={handlePress}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handlePress(discipline.id)}
+              >
                 <Text style={styles.buttonText}>LISTA DE PRESENÇA</Text>
               </TouchableOpacity>
             </View>
