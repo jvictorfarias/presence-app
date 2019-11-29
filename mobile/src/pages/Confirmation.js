@@ -12,6 +12,7 @@ import socketio from "socket.io-client";
 
 import logo from "../assets/logo.png";
 import api from "../services/api";
+import config from "../config/env";
 
 export default function Confirmation() {
   const [disciplines, setDisciplines] = useState([]);
@@ -27,11 +28,11 @@ export default function Confirmation() {
   }
 
   useEffect(() => {
-    const socket = socketio("http://localhost:3333");
+    const socket = socketio(config.SERVER_URL);
     socket.on("present", () => {
       setColorButton("green");
-      loadDisciplines();
     });
+
     async function loadDisciplines() {
       const authorization = await AsyncStorage.getItem("tokenSession");
 

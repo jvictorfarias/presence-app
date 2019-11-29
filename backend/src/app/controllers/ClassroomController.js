@@ -56,8 +56,8 @@ class ClassroomController {
 
   async index(req, res) {
     const studentsFromDiscipline = await StudentDiscipline.findAll({
-      where: { discipline_id: req.body.discipline_id },
-      attributes: ['hit', 'miss', 'present'],
+      where: { discipline_id: req.headers.discipline_id },
+      attributes: ['id', 'hit', 'miss', 'present'],
       include: [
         {
           model: Student,
@@ -67,6 +67,7 @@ class ClassroomController {
       ]
     });
 
+    console.log(studentsFromDiscipline);
     return res.status(200).json(studentsFromDiscipline);
   }
 }

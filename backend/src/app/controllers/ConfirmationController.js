@@ -1,4 +1,3 @@
-import socket from 'socket.io';
 import StudentDiscipline from '../models/StudentsDisciplines';
 
 class ConfirmationController {
@@ -9,9 +8,10 @@ class ConfirmationController {
 
     relation.set({ present: true });
     relation.save();
+    const { discipline_id } = relation;
 
-    req.io.emit('present');
-    return res.status(200).json({});
+    req.io.emit('present', discipline_id);
+    return res.status(200).json({ ok: 'ok' });
   }
 }
 
