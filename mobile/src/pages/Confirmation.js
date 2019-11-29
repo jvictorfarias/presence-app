@@ -14,20 +14,29 @@ import logo from "../assets/logo.png";
 import api from "../services/api";
 
 export default function Confirmation() {
-  async function handlePress() {}
-
+  const socket = socketio("http://localhost:3333");
   const [disciplines, setDisciplines] = useState([]);
+  const [colorButton, setColorButton] = useState("#f34545");
 
-  /*
+  async function handlePress(e) {
+    const auth = await AsyncStorage.getItem("tokenSession");
+    const studentPresent = await api.post("/presence", null, {
+      "Content-Type": "application/json",
+      headers: { authorization: "bearer " + auth },
+      body: { discipline_id: e }
+    });
+  }
+
   useEffect(() => {
-    const socket = socketio("http://192.168.0.10", {
-      query: disciplines.id
+    socket.on("present", () => {
+      setColorButton("green");
     });
   });
-*/
+
   useEffect(() => {
     async function loadDisciplines() {
       const authorization = await AsyncStorage.getItem("tokenSession");
+
       const response = await api.get("/classroom/student", {
         headers: { authorization: "bearer " + authorization }
       });
@@ -47,12 +56,24 @@ export default function Confirmation() {
           showsHorizontalScrollIndicator={false}
         >
           {disciplines.map(discipline => (
-            <View style={styles.card}>
+            <View style={styles.card} key={discipline.id}>
               <Text style={styles.info}>Disciplina</Text>
               <Text style={styles.name}>{discipline.name}</Text>
               <Text style={styles.info}>{discipline.class_time}</Text>
 
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: colorButton,
+                  borderRadius: 2,
+                  alignSelf: "stretch",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginHorizontal: 25,
+                  marginTop: 10,
+                  height: 30
+                }}
+                onPress={() => handlePress(discipline.id)}
+              >
                 <Text style={styles.buttonText}>CONFIRMAR PRESENÇA</Text>
               </TouchableOpacity>
             </View>
@@ -90,16 +111,6 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 32
-  },
-  button: {
-    backgroundColor: "#f34545",
-    borderRadius: 2,
-    alignSelf: "stretch",
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 25,
-    marginTop: 10,
-    height: 30
   },
   buttonText: {
     color: "#FFF",
