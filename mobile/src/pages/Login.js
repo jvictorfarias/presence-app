@@ -32,8 +32,6 @@ export default function Login({ navigation }) {
   */
 
   async function handleSubmit() {
-    navigation.navigate("ManagementStudents");
-    /*
     if (id < 1 || !Number.isInteger(Number(id))) {
       Alert.alert(
         "ID inválido!",
@@ -94,7 +92,7 @@ export default function Login({ navigation }) {
           Alert.alert("Servidor Offline");
         }
       }
-    }*/
+    }
   }
 
   return (

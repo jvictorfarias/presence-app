@@ -6,7 +6,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from "react-native";
 
 import logo from "../assets/logo.png";
@@ -26,7 +27,6 @@ export default function ManagementDisciplines({ navigation }) {
         headers: { authorization: "bearer " + authorization }
       });
       setDisciplines(response.data);
-      await AsyncStorage.setItem("disciplineId", disciplines.id);
     }
     loadDisciplines();
   }, [disciplines.id]);
@@ -47,7 +47,7 @@ export default function ManagementDisciplines({ navigation }) {
               <Text style={styles.name}>{discipline.name}</Text>
               <Text style={styles.info}>{discipline.class_time}</Text>
 
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handlePress}>
                 <Text style={styles.buttonText}>LISTA DE PRESENÇA</Text>
               </TouchableOpacity>
             </View>
