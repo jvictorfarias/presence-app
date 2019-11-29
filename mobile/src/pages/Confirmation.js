@@ -31,16 +31,9 @@ export default function Confirmation() {
   useEffect(() => {
     const socket = socketio(config.SERVER_URL);
     socket.on("present", disciplineConfirmed => {
-      setDisciplines(
-        disciplines.map(discipline =>
-          discipline.id === disciplineConfirmed ? undefined : discipline
-        )
-      );
+      loadDisciplines();
       Alert.alert("Presença confirmada!");
     });
-  });
-
-  useEffect(() => {
     async function loadDisciplines() {
       const authorization = await AsyncStorage.getItem("tokenSession");
 

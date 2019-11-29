@@ -35,7 +35,8 @@ class SessionController {
             .json({ error: 'Dispositivo já cadastrado anteriormente' });
         }
 
-        // await Student.update({ register });
+        await student.set({ register });
+        await student.save();
 
         const { id, name } = student;
 
