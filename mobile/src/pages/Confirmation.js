@@ -8,23 +8,32 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from "react-native";
+import socketio from "socket.io-client";
 
 import logo from "../assets/logo.png";
 import api from "../services/api";
 
 export default function Confirmation() {
+  async function handlePress() {}
+
   const [disciplines, setDisciplines] = useState([]);
 
+  /*
+  useEffect(() => {
+    const socket = socketio("http://192.168.0.10", {
+      query: disciplines.id
+    });
+  });
+*/
   useEffect(() => {
     async function loadDisciplines() {
-      const authorization = AsyncStorage.getItem("tokenSession");
+      const authorization = await AsyncStorage.getItem("tokenSession");
       const response = await api.get("/classroom/student", {
-        headers: authorization
+        headers: { authorization: "bearer " + authorization }
       });
       setDisciplines(response.data);
     }
     loadDisciplines();
-    console.log(disciplines);
   }, [disciplines.id]);
 
   return (

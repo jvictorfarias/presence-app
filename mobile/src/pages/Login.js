@@ -51,12 +51,10 @@ export default function Login({ navigation }) {
     if (type === "teacher") {
       try {
         const siape = id;
-        const response = api.post("/session", { siape, password, type });
+        const response = await api.post("/session", { siape, password, type });
 
         const { token } = response.data;
-        Alert.alert(token);
         await AsyncStorage.setItem("tokenSession", token);
-
         navigation.navigate("ManagementDisciplines");
       } catch (error) {
         if (error.status === 403) {
@@ -79,7 +77,6 @@ export default function Login({ navigation }) {
         });
 
         const { token } = response.data;
-        Alert.alert(token);
         await AsyncStorage.setItem("tokenSession", token);
         navigation.navigate("Confirmation");
       } catch (error) {

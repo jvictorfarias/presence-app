@@ -5,10 +5,13 @@ import {
   StyleSheet,
   Image,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
 
 import logo from "../assets/logo.png";
+
+import api from "../services/api";
 
 export default function ManagementDisciplines({ navigation }) {
   const [disciplines, setDisciplines] = useState([]);
@@ -18,14 +21,15 @@ export default function ManagementDisciplines({ navigation }) {
 
   useEffect(() => {
     async function loadDisciplines() {
-      const authorization = AsyncStorage.getItem("tokenSession");
-      const response = await api.get("/classroom/teachers", {
-        headers: authorization
+      const authorization = await AsyncStorage.getItem("tokenSession");
+      const response = await api.get("/classroom/teacher", {
+        headers: { authorization: "bearer " + authorization }
       });
       setDisciplines(response.data);
+      await AsyncStorage.setItem("disciplineId", disciplines.id);
     }
     loadDisciplines();
-  }, []);
+  }, [disciplines.id]);
 
   return (
     <View style={styles.container}>
