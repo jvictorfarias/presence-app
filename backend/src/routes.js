@@ -6,6 +6,7 @@ import DisciplineController from './app/controllers/DisciplineController';
 import ClassroomController from './app/controllers/ClassroomController';
 import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middlewares/auth';
+import ConfirmationController from './app/controllers/ConfirmationController';
 
 const routes = new Router();
 
@@ -30,4 +31,7 @@ routes.get('/disciplines', DisciplineController.index);
 routes.post('/classroom/:type', ClassroomController.store);
 routes.get('/classroom/:type', authMiddleware, ClassroomController.show);
 routes.get('/classroom', authMiddleware, ClassroomController.index);
+
+/** Rotas para confirmação de presença */
+routes.post('/presence', authMiddleware, ConfirmationController.store);
 export default routes;
