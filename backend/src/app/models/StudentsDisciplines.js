@@ -1,9 +1,15 @@
-import { Model } from 'sequelize';
+import { Model, Sequelize } from 'sequelize';
 
 class StudentsDisciplines extends Model {
   static init(sequelize) {
     super.init(
-      {},
+      {
+        student_id: Sequelize.STRING,
+        discipline_id: Sequelize.STRING,
+        hit: Sequelize.INTEGER,
+        miss: Sequelize.INTEGER,
+        present: Sequelize.BOOLEAN
+      },
       {
         sequelize
       }
