@@ -12,6 +12,8 @@ import {
 
 import logo from "../assets/logo.png";
 import api from "../services/api";
+import present from "../assets/situation-present.png";
+import absent from "../assets/situation-absent.png";
 
 export default function ManagementStudents() {
   const [students, setStudents] = useState([]);
@@ -36,11 +38,10 @@ export default function ManagementStudents() {
 
   return (
     <View style={styles.container}>
-      <Image source={logo} />
+      <Image source={logo} style={{ marginTop: 35 }} />
 
-      <View style={{ height: 350 }}>
+      <View style={{ alignSelf: "stretch", paddingHorizontal: 20 }}>
         <ScrollView
-          horizontal={true}
           contentContainerStyle={styles.contentContainer}
           showsHorizontalScrollIndicator={false}
         >
@@ -51,9 +52,14 @@ export default function ManagementStudents() {
               <Text style={styles.info}>
                 {student.student_disc.matriculation}
               </Text>
-              <Text style={styles.name}>{student.hit}</Text>
-              <Text style={styles.name}>{student.miss}</Text>
-              <Text style={styles.name}>{student.present}</Text>
+              <Text style={styles.info}>
+                Presenças: {student.hit} / Faltas: {student.miss}
+              </Text>
+              <Text style={styles.info}>Situação: </Text>
+              <Image
+                style={styles.situationImage}
+                source={student.present ? present : absent}
+              ></Image>
             </View>
           ))}
         </ScrollView>
@@ -74,21 +80,30 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
     borderRadius: 4,
-    height: 200,
-    width: 200,
+    height: 250,
     alignSelf: "stretch",
     marginTop: 25,
     marginHorizontal: 10,
-    paddingHorizontal: 30,
-    paddingVertical: 30
+    paddingHorizontal: 15,
+    paddingVertical: 15
   },
   info: {
+    fontFamily: "Roboto",
     fontWeight: "bold",
     color: "#444",
-    margin: 5
+    margin: 3
   },
   name: {
-    fontSize: 32
+    fontFamily: "sans-serif-thin",
+    fontSize: 28,
+    margin: 4
+  },
+  situationImage: {
+    flex: 1,
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    alignSelf: "center"
   },
   button: {
     backgroundColor: "#f34545",
