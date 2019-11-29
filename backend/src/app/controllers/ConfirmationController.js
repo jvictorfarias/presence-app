@@ -8,9 +8,9 @@ class ConfirmationController {
 
     let newHit = relation.hit;
     newHit += 1;
-    relation.set({ present: true });
-    relation.set({ hit: newHit });
-    relation.save();
+    await relation.set({ present: true });
+    await relation.set({ hit: newHit });
+    await relation.save();
     const { discipline_id, student_id } = relation;
 
     req.io.emit('present', discipline_id);
