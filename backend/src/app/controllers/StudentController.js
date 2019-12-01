@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import bcrypt from 'bcrypt';
 import Student from '../models/Student';
 
 class StudentController {
@@ -40,42 +39,18 @@ class StudentController {
 
   async show(req, res) {
     /**
-     * Verifica se o objeto para validação está correto
-     */
-    const schema = Yup.object().shape({
-      matriculation: Yup.string().required(),
-      password: Yup.string().required(),
-      register: Yup.string()
-    });
-
-    /**
-     * Caso o objeto não seja válido, retorna status de erro
-     */
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'bad request' });
-    }
-
-    const { password, matriculation, register } = req.body;
-
-    /**
      * Busca pelo usuário já validado
      */
     const student = await Student.findOne({
       where: {
-        matriculation
+        matriculation: req.params.id
       }
     });
-
-    if (student.register !== register && student.register !== null) {
-      return res
-        .status(403)
-        .json({ error: 'Dispositivo já cadastrado anteriormente' });
-    }
 
     /**
      * Caso o usuário não seja encontrado, retorna erro
      */
+
     if (!student) {
       return res.status(400).json({ error: 'student not found' });
     }
@@ -84,11 +59,7 @@ class StudentController {
      * Verifica se a senha do usuário está correta e encriptada
      */
 
-    if (!(await bcrypt.compare(password, student.password_hash))) {
-      return res.status(401).json({ error: 'Wrong password' });
-    }
-
-    const { id, name } = student;
+    const { id, name, matriculation } = student;
     return res.status(200).json({
       id,
       name,
@@ -97,8 +68,19 @@ class StudentController {
   }
 
   async index(req, res) {
-    const students = Student.find({});
+    const students = await Student.findAll({});
     return res.json(students);
+  }
+
+  async delete(req, res) {
+    const student = await Student.destroy({
+      where: { matriculation: req.params.id }
+    });
+
+    if (student >= 0) {
+      return res.status(200).json({ ok: 'Estudante deletado' });
+    }
+    return res.status(400).json({ error: 'Student not found' });
   }
 }
 

@@ -16,7 +16,8 @@ routes.post('/session', SessionController.store);
 
 /** Rotas para alunos */
 routes.post('/students', StudentController.store);
-routes.get('/students', StudentController.show);
+routes.get('/students', StudentController.index);
+routes.get('/students/:id', StudentController.show);
 
 /** Rotas para professores */
 

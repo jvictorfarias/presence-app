@@ -31,8 +31,9 @@ class DisciplineController {
   }
 
   async index(req, res) {
-    const disciplines = await Discipline.find({});
-    return res.status(400).json(disciplines);
+    const disciplines = await Discipline.findAll({});
+
+    return res.status(200).json(disciplines);
   }
 }
 
