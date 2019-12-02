@@ -1,32 +1,8 @@
-import * as Yup from 'yup';
-import bcrypt from 'bcrypt';
 import Teacher from '../models/Teacher';
 
 class TeacherController {
   async store(req, res) {
-    /**
-     * Validação do objeto Teacher
-     */
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      siape: Yup.string().required(),
-      password: Yup.string()
-        .min(8)
-        .required()
-    });
-
-    /**
-     * Caso seja inválido, retorna status de erro
-     */
-
-    const { name, siape, password } = req.body;
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'Data not valid' });
-    }
-
-    /**
-     * Verifica se já existe algum professor com essa matrícula
-     */
+    const { name, siape } = req.body;
 
     if (await Teacher.findOne({ where: { siape } })) {
       return res.status(401).json({ error: 'Teacher already exists' });
@@ -61,7 +37,7 @@ class TeacherController {
   }
 
   async delete(req, res) {
-    const teacher = Teacher.findOne({ where: { siape: req.body.siape } });
+    const teacher = await Teacher.findOne({ where: { siape: req.body.siape } });
 
     if (teacher) {
       const pass = teacher.checkPassword(req.body.password);
