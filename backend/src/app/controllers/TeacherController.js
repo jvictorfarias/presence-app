@@ -41,54 +41,39 @@ class TeacherController {
   }
 
   async show(req, res) {
-    /**
-     * Verifica se o objeto para validação está correto
-     */
-    const schema = Yup.object().shape({
-      siape: Yup.string().required(),
-      password: Yup.string()
-        .min(8)
-        .required()
-    });
+    const teacher = await Teacher.findOne({ where: { siape: req.params.id } });
 
-    /**
-     * Caso o objeto não seja válido, retorna status de erro
-     */
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(403).json({ error: 'bad request' });
-    }
-
-    /**
-     * Busca pelo usuário já validado
-     */
-    const teacher = await Teacher.findOne({
-      siape: req.body.siape
-    });
-
-    /**
-     * Caso o usuário não seja encontrado, retorna erro
-     */
     if (!teacher) {
       return res.status(400).json({ error: 'teacher not found' });
     }
 
-    /**
-     * Verifica se a senha do usuário está correta e encriptada
-     */
-
-    if (!(await bcrypt.compare(req.body.password, teacher.password_hash))) {
-      return res.status(401).json({ error: 'Wrong password' });
-    }
-    /**
-     * Retorna o usuário para que ele possa ser direcionado ao feed
-     */
     const { id, name, siape } = teacher;
     return res.status(200).json({
       id,
       name,
       siape
     });
+  }
+
+  async index(req, res) {
+    const teachers = await Teacher.findAll({});
+    return res.json(teachers);
+  }
+
+  async delete(req, res) {
+    const teacher = Teacher.findOne({ where: { siape: req.body.siape } });
+
+    if (teacher) {
+      const pass = teacher.checkPassword(req.body.password);
+      if (!pass) {
+        return res.status(401).json({ error: 'invalid password' });
+      }
+      teacher.destroy();
+      teacher.save();
+      return res.status(200).json({ ok: 'Professor deletado' });
+    }
+
+    return res.status(400).json({ error: 'teacher not found' });
   }
 }
 

@@ -18,10 +18,14 @@ routes.post('/session', SessionController.store);
 routes.post('/students', StudentController.store);
 routes.get('/students', StudentController.index);
 routes.get('/students/:id', StudentController.show);
+routes.delete('/students', StudentController.delete);
 
 /** Rotas para professores */
 
 routes.post('/teachers', TeacherController.store);
+routes.get('/teachers', TeacherController.index);
+routes.get('/teachers/:id', TeacherController.show);
+routes.delete('/teachers', TeacherController.delete);
 
 /** Rotas para disciplinas */
 

@@ -73,13 +73,20 @@ class StudentController {
   }
 
   async delete(req, res) {
-    const student = await Student.destroy({
-      where: { matriculation: req.params.id }
+    const student = await Student.findOne({
+      where: { matriculation: req.body.matriculation }
     });
 
-    if (student >= 0) {
+    if (student) {
+      const pass = student.checkPassword(req.body.password);
+      if (!pass) {
+        return res.status(401).json({ error: 'invalid password' });
+      }
+      student.destroy();
+      student.save();
       return res.status(200).json({ ok: 'Estudante deletado' });
     }
+
     return res.status(400).json({ error: 'Student not found' });
   }
 }
